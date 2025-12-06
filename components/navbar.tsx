@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
+import Image from "next/image"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -37,9 +38,8 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? "glassmorphism py-4 shadow-lg shadow-primary/10" : "py-6"
-        }`}
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "glassmorphism py-4 shadow-lg shadow-primary/10" : "py-6"
+          }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -47,8 +47,9 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <motion.div className="text-2xl font-bold gradient-text glow" whileHover={{ scale: 1.05 }}>
-              YaPaze
+            <motion.div className="text-2xl font-bold flex items-center gap-3 " whileHover={{ scale: 1.05 }}>
+              <Image src="/logoo.png" alt="Logo" width={40} height={40} />
+               YaPaze Technogies
             </motion.div>
           </Link>
 

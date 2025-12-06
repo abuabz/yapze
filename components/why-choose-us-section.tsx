@@ -111,9 +111,9 @@ export function WhyChooseUsSection() {
           viewport={{ once: true, amount: 0.2 }}
         >
           {[
-            { number: "500+", label: "Projects Completed" },
-            { number: "100+", label: "Happy Clients" },
-            { number: "50+", label: "Team Members" },
+            { number: "30+", label: "Projects Completed" },
+            { number: "10+", label: "Happy Clients" },
+            { number: "20+", label: "Team Members" },
           ].map((stat, index) => (
             <motion.div key={index} variants={itemVariants} className="glassmorphism p-8 rounded-2xl text-center">
               <motion.div

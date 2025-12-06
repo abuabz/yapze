@@ -1,10 +1,9 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -26,7 +25,6 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000))
     setIsSubmitting(false)
     setFormData({ name: "", email: "", message: "" })
@@ -66,7 +64,7 @@ export function ContactSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {/* Left side - Content */}
+          {/* Left side - Content (only content changed) */}
           <motion.div variants={itemVariants} className="space-y-8">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -83,30 +81,42 @@ export function ContactSection() {
               today to learn more and get started on your project.
             </p>
 
-            {/* Contact Info Cards */}
+            {/* Contact Info Cards - Only content updated */}
             <div className="space-y-4">
               {[
                 {
                   icon: Mail,
                   label: "Email",
-                  value: "hello@yapaze.com",
+                  value: "info@yapaze.com",
+                  href: "mailto:info@yapaze.com",
+                },
+                {
+                  icon: MessageCircle,
+                  label: "WhatsApp",
+                  value: "+973 3936 2634",
+                  href: "https://wa.me/97339362634",
                 },
                 {
                   icon: Phone,
-                  label: "Phone",
-                  value: "+1 (555) 123-4567",
+                  label: "Mobile",
+                  value: "8714414438",
+                  href: "tel:+918714414438",
                 },
                 {
                   icon: MapPin,
-                  label: "Location",
-                  value: "San Francisco, CA",
+                  label: "Website",
+                  value: "www.yapaze.net",
+                  href: "https://www.yapaze.net",
                 },
               ].map((item, index) => {
                 const Icon = item.icon
                 return (
-                  <motion.div
+                  <motion.a
                     key={index}
-                    className="flex items-center gap-4 p-4 glassmorphism rounded-lg hover:border-primary/50 transition-all"
+                    href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-4 p-4 glassmorphism rounded-lg hover:border-primary/50 transition-all cursor-pointer"
                     whileHover={{ x: 5 }}
                   >
                     <div className="p-3 bg-primary/10 rounded-lg">
@@ -116,13 +126,13 @@ export function ContactSection() {
                       <p className="text-sm text-foreground/60">{item.label}</p>
                       <p className="font-semibold">{item.value}</p>
                     </div>
-                  </motion.div>
+                  </motion.a>
                 )
               })}
             </div>
           </motion.div>
 
-          {/* Right side - Form */}
+          {/* Right side - Form (100% unchanged) */}
           <motion.div variants={itemVariants} className="glassmorphism p-8 rounded-2xl">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
