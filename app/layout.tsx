@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   description:
     "Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud Computing, AI/ML, and Digital Transformation. Future-proof your business with YaPaze.",
-  
+
   // Viewport & Mobile
   viewport: {
     width: "device-width",
@@ -58,11 +58,11 @@ export const metadata: Metadata = {
   // Icons & Manifest
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/icon.png", type: "image/png", sizes: "192x192" },
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/logofavicon.png" },
+      { url: "/logofavicon.png", type: "image/png", sizes: "192x192" },
+      { url: "/logofavicon.png", sizes: "180x180", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "/logofavicon.png",
   },
   manifest: "/site.webmanifest",
 
@@ -99,11 +99,11 @@ export const metadata: Metadata = {
     "IT consulting",
     "software development company",
   ],
-  authors: [{ name: "YaPaze Technologies", url: "https://www.yapaze.com" }],
+  authors: [{ name: "YaPaze Technologies", url: "https://www.yapaze.net" }],
   creator: "YaPaze Technologies",
   publisher: "YaPaze Technologies",
   alternates: {
-    canonical: "https://www.yapaze.com",
+    canonical: "https://www.yapaze.net",
   },
 }
 
@@ -118,8 +118,8 @@ export default function RootLayout({
         {/* Additional meta tags that can't go in <head> directly */}
         <meta name="format-detection" content="telephone=no, date=no, email=no" />
         <meta name="theme-color" content="#ffffff" />
-        <link rel="canonical" href="https://www.yapaze.com" />
-        <link rel="icon" href="/favicon.ico?v=2" />
+        <link rel="canonical" href="https://www.yapaze.net" />
+        <link rel="icon" href="/logofavicon.png" />
       </head>
       <body
         className={`${montserrat.variable} font-sans antialiased bg-background text-foreground`}

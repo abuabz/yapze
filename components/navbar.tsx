@@ -20,10 +20,12 @@ export function Navbar() {
   }, [])
 
   const navItems = [
-    { label: "WORKS", href: "/portfolio" },
+    { label: "HOME", href: "/" },
     { label: "ABOUT", href: "/about" },
     { label: "SERVICES", href: "/services" },
-    { label: "BLOG", href: "/blog" },
+    { label: "PORTFOLIO", href: "/portfolio" },
+    // { label: "BLOG", href: "/blog" },
+    { label: "SKILL LAB", href: "/skill-lab" },
     { label: "CONTACT", href: "/contact" },
   ]
 
@@ -38,8 +40,7 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "glassmorphism py-4 shadow-lg shadow-primary/10" : "py-6"
-          }`}
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-50 transition-all duration-300 bg-white/10 backdrop-blur-md border border-white/20 rounded-full py-2 shadow-lg"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -48,13 +49,12 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <motion.div className="text-2xl font-bold flex items-center gap-3 " whileHover={{ scale: 1.05 }}>
-              <Image src="/logoo.png" alt="Logo" width={40} height={40} />
-               YaPaze Technogies
+              <Image src="/logoandnamewhite.svg" alt="Logo" width={130} height={130} />
             </motion.div>
           </Link>
 
           {/* Desktop Navigation - Hidden on mobile */}
-          <div className="hidden  items-center gap-12">
+          <div className="hidden md:flex items-center gap-12">
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -78,7 +78,7 @@ export function Navbar() {
             </motion.button>
 
             <motion.button
-              className="p-2 text-foreground hover:text-primary transition-colors"
+              className="p-2 text-foreground hover:text-primary transition-colors md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileTap={{ scale: 0.95 }}
             >

@@ -1,14 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { 
-  Zap, 
-  Users, 
-  Shield, 
-  Target, 
-  Lightbulb, 
-  RefreshCw, 
-  HeartHandshake 
+import {
+  Zap,
+  Users,
+  Shield,
+  Target,
+  Lightbulb,
+  RefreshCw,
+  HeartHandshake
 } from "lucide-react"
 
 export function AboutSection() {
@@ -115,21 +115,27 @@ export function AboutSection() {
           </motion.div>
 
           {/* Right side - Visual */}
-          <motion.div variants={itemVariants} className="relative h-96">
+          <motion.div variants={itemVariants} className="relative h-[185px] md:h-[265px]">
             <div className="absolute inset-0 glassmorphism rounded-2xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
               <motion.div
                 className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%"],
+                style={{
+                  backgroundImage: "url('/about01.png')",
+                  backgroundSize: "contain",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
-                transition={{
-                  duration: 8,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "reverse",
-                }}
+              // animate={{
+              //   backgroundPosition: ["100% 100%", "0% 100%"],
+              // }}
+              // transition={{
+              //   duration: 8,
+              //   repeat: Number.POSITIVE_INFINITY,
+              //   repeatType: "reverse",
+              // }}
               >
-                <div className="text-6xl font-bold gradient-text opacity-20">YaPaze</div>
+
               </motion.div>
             </div>
           </motion.div>

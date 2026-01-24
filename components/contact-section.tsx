@@ -25,7 +25,18 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Construct WhatsApp message
+    const phoneNumber = "918714414438"
+    const text = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${text}`
+
+    // Simulate a short delay for better UX
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    // Open WhatsApp
+    window.open(whatsappUrl, "_blank")
+
     setIsSubmitting(false)
     setFormData({ name: "", email: "", message: "" })
   }
@@ -87,8 +98,8 @@ export function ContactSection() {
                 {
                   icon: Mail,
                   label: "Email",
-                  value: "info@yapaze.com",
-                  href: "mailto:info@yapaze.com",
+                  value: "info@yapaze.net",
+                  href: "mailto:info@yapaze.net",
                 },
                 {
                   icon: MessageCircle,
@@ -99,7 +110,7 @@ export function ContactSection() {
                 {
                   icon: Phone,
                   label: "Mobile",
-                  value: "8714414438",
+                  value: "+91 8714414438",
                   href: "tel:+918714414438",
                 },
                 {

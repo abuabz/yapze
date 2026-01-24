@@ -25,7 +25,7 @@ export function HeroSection() {
   }
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section style={{ backgroundImage: "url('/backgroundimglogo.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Animated gradient background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
@@ -63,49 +63,35 @@ export function HeroSection() {
         </div>
 
         <motion.div variants={itemVariants} className="mb-6">
-          <span className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-sm font-semibold text-primary">
+          <span className="inline-block mb-20 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-sm font-semibold text-primary">
             Welcome to the Future
           </span>
         </motion.div>
 
-        <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          Innovating <span className="gradient-text">Next-Gen</span>
-        </motion.h1>
+        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-lg absolute bottom-2 right-2 md:right-2 md:bottom-2  m-5 max-w-sm text-left">
+          <motion.h1 variants={itemVariants} className="text-xl md:text-2xl font-bold mb-2 leading-tight">
+            Innovating <span className="gradient-text">Next-Gen</span>
+          </motion.h1>
 
-        <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
-          SOLUTIONS
-        </motion.h2>
+          <motion.h2 variants={itemVariants} className="text-lg md:text-xl font-bold mb-3 gradient-text">
+            SOLUTIONS
+          </motion.h2>
 
-        <motion.p
-          variants={itemVariants}
-          className="text-lg md:text-xl text-foreground/70 mb-8 max-w-2xl mx-auto leading-relaxed"
-        >
-          Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud, and Digital
-          Transformation.
-        </motion.p>
-
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.button
-            className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-bold text-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <motion.p
+            variants={itemVariants}
+            className="text-sm text-foreground/70 mb-4 leading-relaxed"
           >
-            Learn More
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
-          <motion.button
-            className="px-8 py-4 border-2 border-primary text-primary rounded-full font-bold text-lg hover:bg-primary/10 transition-all"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Explore Services
-          </motion.button>
-        </motion.div>
+            Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud, and Digital
+            Transformation.
+          </motion.p>
+        </div>
+
+
       </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-1 left-1/2 transform -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
       >
