@@ -59,13 +59,13 @@ export function Footer() {
           >
             <div className="flex items-center justify-center md:justify-start flex-col text-center md:text-left">
               <Image
-                src="/logoo.png"
+                src="/logoandname.webp"
                 alt="YaPaze Technologies Logo"
-                width={40}
-                height={40}
+                width={200}
+                height={200}
                 className="mb-3"
               />
-              <h3 className="text-2xl font-bold gradient-text mb-4">YaPaze Technologies</h3>
+              {/* <h3 className="text-2xl font-bold gradient-text mb-4">YaPaze Technologies</h3> */}
             </div>
 
             <p className="text-foreground/60 text-sm leading-relaxed">
