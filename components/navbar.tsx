@@ -25,7 +25,7 @@ export function Navbar() {
     { label: "SERVICES", href: "/services" },
     { label: "PORTFOLIO", href: "/portfolio" },
     // { label: "BLOG", href: "/blog" },
-    { label: "SKILL LAB", href: "/skill-lab" },
+    { label: "EDU LAB", href: "/skill-lab" },
     { label: "CONTACT", href: "/contact" },
   ]
 

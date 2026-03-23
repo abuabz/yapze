@@ -3,7 +3,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
 export const metadata = {
-  title: "About YaPaze | IT Solutions & Digital Transformation",
+  title: "About Us | IT Solutions & Digital Transformation",
   description:
     "Learn about YaPaze Technologies - our mission, vision, and core values in delivering innovative IT solutions.",
 }

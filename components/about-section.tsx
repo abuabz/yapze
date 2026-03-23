@@ -8,8 +8,10 @@ import {
   Target,
   Lightbulb,
   RefreshCw,
-  HeartHandshake
+  HeartHandshake,
+  ArrowRight
 } from "lucide-react"
+import Link from "next/link"
 
 export function AboutSection() {
   const containerVariants = {
@@ -91,7 +93,7 @@ export function AboutSection() {
           {/* Left side - Content */}
           <motion.div variants={itemVariants} className="space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              About <span className="gradient-text">YaPaze</span>
+              About <span className="gradient-text">Us</span>
             </h2>
 
             <div className="space-y-4 text-foreground/80 leading-relaxed">
@@ -108,9 +110,11 @@ export function AboutSection() {
             </div>
 
             <motion.div className="pt-4" whileHover={{ x: 10 }}>
-              <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all">
-                Discover Our Story
-              </button>
+              <Link href="/about">
+                <button className="px-4 flex   cursor-pointer items-center gap-2 py-2 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all">
+                  More Info <ArrowRight className="w-4 h-4" />
+                </button>
+              </Link>
             </motion.div>
           </motion.div>
 
