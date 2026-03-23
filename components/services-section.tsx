@@ -8,6 +8,11 @@ import {
   Cloud,
   Search,
   Zap,
+  RefreshCw,
+  HeartHandshake,
+  Users,
+  Target,
+  Lightbulb,
 } from "lucide-react"
 
 const services = [
@@ -62,6 +67,49 @@ const services = [
     ],
   },
 ]
+const values = [
+  {
+    icon: <Lightbulb className="w-8 h-8" />,
+    title: "Innovation",
+    desc: "We constantly explore new ideas and emerging technologies to deliver future-ready digital solutions.",
+  },
+  {
+    icon: <Target className="w-8 h-8" />,
+    title: "Customer Focus",
+    desc: "We place our clients at the heart of every decision, delivering value-driven technology that meets real business needs.",
+  },
+  {
+    icon: <Shield className="w-8 h-8" />,
+    title: "Integrity",
+    desc: "We operate with transparency, honesty, and ethical responsibility in every interaction and project.",
+  },
+  {
+    icon: <Zap className="w-8 h-8" />,
+    title: "Quality Excellence",
+    desc: "We maintain high standards and deliver reliable, secure, and scalable IT solutions with precision.",
+  },
+  {
+    icon: <Shield className="w-9 h-9" />,
+    // Slightly bigger for emphasis
+    title: "Security First",
+    desc: "We prioritize data protection and cybersecurity to ensure safe and trusted digital environments.",
+  },
+  {
+    icon: <RefreshCw className="w-8 h-8" />,
+    title: "Continuous Improvement",
+    desc: "We learn, evolve, and invest in our skills and processes to stay ahead in a fast-changing tech world.",
+  },
+  {
+    icon: <HeartHandshake className="w-8 h-8" />,
+    title: "Collaboration",
+    desc: "We believe in teamwork—working closely with clients and partners to unlock innovation and achieve shared goals.",
+  },
+  {
+    icon: <Users className="w-8 h-8" />,
+    title: "Empowerment",
+    desc: "We empower businesses with the tools and knowledge to leverage technology for growth and success.",
+  }
+]
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -77,6 +125,14 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: { duration: 0.7, ease: "easeOut" },
+  },
+}
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8 },
   },
 }
 
@@ -99,13 +155,12 @@ export function ServicesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Next-Gen <span className="gradient-text">Solutions</span> That Deliver Results
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            Our<span className="gradient-text"> Services</span>
           </h2>
           <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
             At YaPaze Technologies, we take pride in delivering innovative, secure, and scalable solutions across industries.
             <br className="hidden md:block" />
-            Our portfolio reflects our commitment to quality, performance, and measurable business impact.
           </p>
         </motion.div>
 
@@ -123,44 +178,44 @@ export function ServicesSection() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                whileHover={{ y: -12, transition: { duration: 0.4 } }}
-                className="group glassmorphism rounded-3xl p-8 border border-white/10 
+                whileHover={{ y: -8, transition: { duration: 0.4 } }}
+                className="group glassmorphism rounded-2xl p-6 border border-white/10 
                            hover:border-primary/50 backdrop-blur-xl
                            transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20"
               >
                 <div
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-4 mb-6 
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} p-3 mb-4 
                               group-hover:scale-110 transition-transform duration-500 shadow-lg`}
                 >
-                  <Icon className="w-8 h-8 text-white" />
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
 
-                <h3 className="text-2xl font-bold mb-6 text-foreground group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors leading-tight">
                   {service.title}
                 </h3>
 
-                <ul className="space-y-4">
+                <ul className="space-y-2">
                   {service.items.map((item, i) => (
                     <motion.li
                       key={i}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 + 0.3 }}
                       viewport={{ once: true }}
-                      className="flex items-start gap-3 text-foreground/80"
+                      className="flex items-start gap-2 text-foreground/70"
                     >
-                      <Zap className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="leading-relaxed">{item}</span>
+                      <Zap className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                      <span className="text-sm leading-tight">{item}</span>
                     </motion.li>
                   ))}
                 </ul>
 
                 <motion.div
-                  className="mt-8 flex items-center gap-3 text-primary font-bold opacity-0 group-hover:opacity-100 
-                             translate-x-[-20px] group-hover:translate-x-0 transition-all duration-500"
+                  className="mt-6 flex items-center gap-2 text-primary font-bold text-sm opacity-0 group-hover:opacity-100 
+                             translate-x-[-10px] group-hover:translate-x-0 transition-all duration-500"
                 >
                   <span>Explore Service</span>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </motion.div>
@@ -183,6 +238,52 @@ export function ServicesSection() {
             Start Your Project Today
           </button>
         </motion.div>
+
+        <motion.section
+          className="mt-20 py-16 px-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.h3
+            variants={itemVariants}
+            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-primary via-blue-600 to-purple-600 bg-clip-text text-transparent"
+          >
+            Core Values of <span className="gradient-text">YaPaze Technologies</span>
+          </motion.h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.title}
+                variants={itemVariants}
+                whileHover={{ y: -5, transition: { duration: 0.3 } }}
+                className="group glassmorphism rounded-xl p-5 border border-white/10 hover:border-primary/60 
+                       backdrop-blur-xl transition-all duration-500 hover:shadow-lg hover:shadow-primary/5"
+              >
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <div
+                    className="p-3 rounded-full bg-gradient-to-br from-primary/20 
+                           group-hover:from-primary/40 transition-all duration-500"
+                  >
+                    <div className="text-primary group-hover:scale-110 transition-transform duration-300">
+                      {/* Using smaller icons for core values as well */}
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        {value.icon}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 className="text-lg font-bold text-foreground">{value.title}</h4>
+                  <p className="text-muted-foreground text-xs leading-normal">
+                    {value.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
       </div>
     </section>
   )
