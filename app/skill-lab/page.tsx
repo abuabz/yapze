@@ -47,7 +47,7 @@ export default function SkillLabPage() {
                     className="flex items-center gap-2 px-4 py-1.5 rounded-full glassmorphism border border-white/10 mb-8"
                 >
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    <span className="text-xs font-semibold text-white/70 uppercase tracking-widest">Waitlist</span>
+                    <span className="text-xs font-semibold text-white/70 uppercase tracking-widest">welcome to future</span>
                 </motion.div>
 
                 {/* Main Heading */}
@@ -129,11 +129,7 @@ export default function SkillLabPage() {
                 </span>
             </div>
 
-            <footer className="relative z-10 py-8 px-4 flex flex-col items-center gap-2">
-                <div className="text-white/20 text-xs font-medium tracking-widest uppercase">
-                    ©2026 Skill-Lab • Built by YaPaze
-                </div>
-            </footer>
+
 
             <style jsx>{`
                 .stroke-text {
