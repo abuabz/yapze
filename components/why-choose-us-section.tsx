@@ -89,8 +89,8 @@ export function WhyChooseUsSection() {
                 className="relative p-[1px] rounded-xl overflow-hidden bg-white/5 border border-white/10 group transition-all duration-300 flex"
                 whileHover={{ y: -5 }}
               >
-                {/* Rotating glassmorphism border sweep on hover */}
-                <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 animate-[spin_3s_linear_infinite]" />
+                {/* Rotating glassmorphism border sweep - ALWAYS ACTIVE */}
+                <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-100 -z-10 animate-[spin_3s_linear_infinite]" />
 
                 {/* Card Content body */}
                 <div className="relative bg-[#07070b]/90 backdrop-blur-xl w-full h-full rounded-[11px] p-6 text-center z-10 flex flex-col items-center justify-center">
@@ -127,8 +127,8 @@ export function WhyChooseUsSection() {
               className="relative p-[1px] rounded-2xl overflow-hidden bg-white/5 border border-white/10 group transition-all duration-300 flex"
               whileHover={{ y: -5 }}
             >
-              {/* Rotating glassmorphism border sweep on hover */}
-              <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 animate-[spin_3s_linear_infinite]" />
+              {/* Rotating glassmorphism border sweep - ALWAYS ACTIVE */}
+              <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-100 -z-10 animate-[spin_3s_linear_infinite]" />
 
               {/* Card Content body */}
               <div className="relative bg-[#07070b]/90 backdrop-blur-xl w-full h-full rounded-[15px] p-8 text-center z-10 flex flex-col items-center justify-center">

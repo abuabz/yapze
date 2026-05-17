@@ -92,6 +92,8 @@ export function ContactSection() {
               today to learn more and get started on your project.
             </p>
 
+            {/* Highly interactive Chat with Sales VIP Card */}
+
             {/* Contact Info Cards - Only content updated */}
             <div className="space-y-4">
               {[
@@ -143,60 +145,100 @@ export function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Right side - Form (100% unchanged) */}
-          <motion.div variants={itemVariants} className="glassmorphism p-8 rounded-2xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold mb-2">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40"
-                  required
-                />
-              </div>
+          {/* Right side - Form & Sales VIP Card (grouped in space-y-6) */}
+          <div className="space-y-6">
+            <motion.div variants={itemVariants} className="glassmorphism p-8 rounded-2xl">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-2">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your@email.com"
-                  className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40"
-                  required
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-2">Message</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us about your project..."
-                  rows={5}
-                  className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40 resize-none"
-                  required
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us about your project..."
+                    rows={5}
+                    className="w-full px-4 py-3 bg-secondary/50 border border-primary/20 rounded-lg focus:outline-none focus:border-primary/50 transition-colors text-foreground placeholder:text-foreground/40 resize-none"
+                    required
+                  />
+                </div>
 
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                <Send className="w-4 h-4" />
-              </motion.button>
-            </form>
-          </motion.div>
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  <Send className="w-4 h-4" />
+                </motion.button>
+              </form>
+            </motion.div>
+
+            {/* Highly interactive Chat with Sales VIP Card - Emerald Theme */}
+            <motion.a
+              href="mailto:hello@yapaze.net"
+              variants={itemVariants}
+              className="relative p-[1px] rounded-2xl overflow-hidden bg-white/5 border border-white/10 group transition-all duration-300 flex"
+              whileHover={{ y: -4, scale: 1.01 }}
+            >
+              {/* Spinning glassmorphism border sweep - ALWAYS ACTIVE */}
+              <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#10b981_70%,#06b6d4_90%,transparent_100%)] opacity-100 -z-10 animate-[spin_3s_linear_infinite]" />
+
+              {/* Card Content body */}
+              <div className="relative bg-[#07070b]/90 backdrop-blur-xl w-full h-full rounded-[15px] p-6 text-left z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30 group-hover:bg-emerald-500/25 transition-all">
+                    <MessageCircle className="w-8 h-8 text-emerald-400 filter drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse" />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-mono font-bold text-emerald-400 tracking-wider">
+                      SALES SUPPORT
+                    </span>
+                    <h3 className="text-xl font-bold text-white tracking-tight">Chat with Sales</h3>
+                    <p className="text-xs text-slate-300 leading-normal font-light">
+                      Speak directly with our solutions architects about pricing & custom engineering.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto mt-2 sm:mt-0 gap-1 select-none">
+                  <span className="text-[11px] sm:text-xs font-mono text-emerald-400 group-hover:text-cyan-400 font-bold transition-colors">
+                    hello@yapaze.net
+                  </span>
+                  <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/5 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                    ONLINE
+                  </span>
+                </div>
+              </div>
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>

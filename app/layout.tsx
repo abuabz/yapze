@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
+import { Chatbot } from "@/components/chatbot"
 import "./globals.css"
 
 const montserrat = Montserrat({
@@ -125,6 +126,8 @@ export default function RootLayout({
         className={`${montserrat.variable} font-sans antialiased bg-background text-foreground`}
       >
         {children}
+        {/* Global Floating AI Chatbot */}
+        <Chatbot />
       </body>
     </html>
   )
