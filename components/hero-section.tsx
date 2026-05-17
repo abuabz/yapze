@@ -25,7 +25,10 @@ export function HeroSection() {
   }
 
   return (
-    <section style={{ backgroundImage: "url('/backgroundimglogo.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 bg-cover bg-center bg-no-repeat bg-[url('/backgroundimglogo.webp')] md:bg-[url('/yapazelandingimg.png')]">
+      {/* Dark overlay for contrast and depth (desktop only) */}
+      <div className="hidden md:block absolute inset-0 bg-black/45 -z-10" />
+
       {/* Animated gradient background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
@@ -62,32 +65,57 @@ export function HeroSection() {
           ))}
         </div>
 
-        <motion.div variants={itemVariants} className="mb-6">
-          <span className="inline-block mb-20 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full text-sm font-semibold text-primary">
-            Welcome to the Future
-          </span>
-        </motion.div>
-
-        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-lg absolute bottom-2 right-2 md:right-2 md:bottom-2  m-5 max-w-sm text-left">
-          <motion.h1 variants={itemVariants} className="text-xl md:text-2xl font-bold mb-2 leading-tight">
-            Innovating <span className="gradient-text">Next-Gen</span>
-          </motion.h1>
-
-          <motion.h2 variants={itemVariants} className="text-lg md:text-xl font-bold mb-3 gradient-text">
-            SOLUTIONS
-          </motion.h2>
-
-          <motion.p
-            variants={itemVariants}
-            className="text-sm text-foreground/70 mb-4 leading-relaxed"
-          >
-            Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud, and Digital
-            Transformation.
-          </motion.p>
-        </div>
 
 
       </motion.div>
+
+      {/* Mobile Card - Bottom Right Old Style */}
+      <div className="md:hidden absolute bottom-2 right-2 m-5 max-w-sm w-[calc(100%-2.5rem)] z-20">
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-lg text-left"
+        >
+          <h1 className="text-xl font-bold mb-2 leading-tight">
+            Innovating <span className="gradient-text">Next-Gen</span>
+          </h1>
+
+          <h2 className="text-lg font-bold mb-3 gradient-text">
+            SOLUTIONS
+          </h2>
+
+          <p className="text-sm text-foreground/70 mb-4 leading-relaxed">
+            Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud, and Digital
+            Transformation.
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Desktop Card - Center Left Glassmorphic Style */}
+      <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-16 lg:left-24 max-w-sm w-full z-20">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          className="glassmorphism rounded-2xl p-8 shadow-[0_8px_32px_0_rgba(128,102,247,0.2)] text-left hover:border-[#8066f7]/50 transition-all duration-300 group overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#8066f7]/5 to-[#8066f7]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+          <h1 className="text-xl md:text-2xl font-bold mb-2 leading-tight text-white">
+            Innovating <span className="gradient-text">Next-Gen</span>
+          </h1>
+
+          <h2 className="text-lg md:text-xl font-bold mb-3 gradient-text">
+            SOLUTIONS
+          </h2>
+
+          <p className="text-sm text-slate-200/90 mb-4 leading-relaxed">
+            Smart, secure, and scalable IT solutions in Web & App Development, Cybersecurity, Cloud, and Digital
+            Transformation.
+          </p>
+        </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div

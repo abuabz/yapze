@@ -86,17 +86,23 @@ export function WhyChooseUsSection() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="glassmorphism p-6 rounded-xl text-center hover:border-primary/50 transition-all"
+                className="relative p-[1px] rounded-xl overflow-hidden bg-white/5 border border-white/10 group transition-all duration-300 flex"
                 whileHover={{ y: -5 }}
               >
-                <motion.div className="mb-4 flex justify-center" whileHover={{ scale: 1.2, rotate: 10 }}>
-                  <div className="p-3 bg-primary/10 rounded-lg">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                </motion.div>
+                {/* Rotating glassmorphism border sweep on hover */}
+                <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 animate-[spin_3s_linear_infinite]" />
 
-                <h3 className="font-bold mb-2">{feature.title}</h3>
-                <p className="text-sm text-foreground/70 leading-relaxed">{feature.description}</p>
+                {/* Card Content body */}
+                <div className="relative bg-[#07070b]/90 backdrop-blur-xl w-full h-full rounded-[11px] p-6 text-center z-10 flex flex-col items-center justify-center">
+                  <motion.div className="mb-4 flex justify-center" whileHover={{ scale: 1.2, rotate: 10 }}>
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                      <Icon className="w-6 h-6 text-primary" />
+                    </div>
+                  </motion.div>
+
+                  <h3 className="font-bold mb-2 text-white">{feature.title}</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed font-light">{feature.description}</p>
+                </div>
               </motion.div>
             )
           })}
@@ -115,17 +121,28 @@ export function WhyChooseUsSection() {
             { number: "75+", label: "Happy Clients" },
             { number: "20+", label: "Team Members" },
           ].map((stat, index) => (
-            <motion.div key={index} variants={itemVariants} className="glassmorphism p-8 rounded-2xl text-center">
-              <motion.div
-                className="text-4xl font-bold gradient-text mb-2"
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
-              >
-                {stat.number}
-              </motion.div>
-              <p className="text-foreground/70">{stat.label}</p>
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              className="relative p-[1px] rounded-2xl overflow-hidden bg-white/5 border border-white/10 group transition-all duration-300 flex"
+              whileHover={{ y: -5 }}
+            >
+              {/* Rotating glassmorphism border sweep on hover */}
+              <div className="absolute -inset-[100%] bg-[conic-gradient(from_0deg,transparent_45%,#8066f7_70%,#22d3ee_90%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 animate-[spin_3s_linear_infinite]" />
+
+              {/* Card Content body */}
+              <div className="relative bg-[#07070b]/90 backdrop-blur-xl w-full h-full rounded-[15px] p-8 text-center z-10 flex flex-col items-center justify-center">
+                <motion.div
+                  className="text-4xl font-bold gradient-text mb-2"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+                >
+                  {stat.number}
+                </motion.div>
+                <p className="text-slate-300 font-light">{stat.label}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
