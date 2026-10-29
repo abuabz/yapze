@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
 import Image from "next/image"
@@ -9,6 +10,8 @@ import Image from "next/image"
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,13 +23,13 @@ export function Navbar() {
   }, [])
 
   const navItems = [
-    { label: "HOME", href: "/" },
-    { label: "ABOUT", href: "/about" },
-    { label: "SERVICES", href: "/services" },
-    { label: "PORTFOLIO", href: "/portfolio" },
-    // { label: "BLOG", href: "/blog" },
-    { label: "EDU LAB", href: "/skill-lab" },
-    { label: "CONTACT", href: "/contact" },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Portfolio", href: "/portfolio" },
+    // { label: "Blog", href: "/blog" },
+    { label: "Edu Lab", href: "/skill-lab" },
+    { label: "Contact", href: "/contact" },
   ]
 
   const socialLinks = [
@@ -40,7 +43,7 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-50 transition-all duration-300 bg-white/10 backdrop-blur-md border border-white/20 rounded-full py-2 shadow-lg"
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-50 transition-all duration-300 bg-[#0c0d12]/80 backdrop-blur-xl border border-white/10 rounded-full py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -54,17 +57,39 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation - Hidden on mobile */}
-          <div className="hidden md:flex items-center gap-12">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-sm font-semibold text-foreground/80 hover:text-primary transition-colors relative group"
-              >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-1" onMouseLeave={() => setHoveredHref(null)}>
+            {navItems.map((item) => {
+              const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onMouseEnter={() => setHoveredHref(item.href)}
+                  onFocus={() => setHoveredHref(item.href)}
+                  onBlur={() => setHoveredHref(null)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`relative px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-300 ${
+                    isActive || hoveredHref === item.href ? "text-white" : "text-slate-400"
+                  }`}
+                >
+                  {hoveredHref === item.href && (
+                    <motion.span
+                      layoutId="nav-hover-pill"
+                      className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_16px_rgba(0,0,0,0.45)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active-dot"
+                      className="absolute bottom-0.5 left-1/2 z-10 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_10px_2px_rgba(128,102,247,0.8)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Right side: CTA Button and Toggle */}
@@ -130,7 +155,7 @@ export function Navbar() {
                       key={item.label}
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className="text-4xl md:text-5xl font-bold text-primary hover:text-primary/80 transition-colors"
+                      className="text-4xl md:text-5xl font-bold uppercase text-primary hover:text-primary/80 transition-colors"
                     >
                       {item.label}
                     </Link>

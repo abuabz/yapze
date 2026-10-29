@@ -156,7 +156,7 @@ export function ServicesSection() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Our<span className="gradient-text"> Services</span>
+            What<span className="gradient-text"> We Do</span>
           </h2>
           <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
             At YaPaze Technologies, we take pride in delivering innovative, secure, and scalable solutions across industries.

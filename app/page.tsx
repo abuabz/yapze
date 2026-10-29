@@ -11,8 +11,8 @@ import { ScrollToTop } from "@/components/scroll-to-top"
 export default function Home() {
   return (
     <main className="min-h-screen bg-transparent relative overflow-hidden select-none">
-      {/* High-tech Canvas node particle network background with yapazelandingimg.png */}
-      <AnimatedCanvasBg />
+      {/* Static background image (particle animation disabled) */}
+      <AnimatedCanvasBg animated={false} />
 
       <Navbar />
       <V2Hero />

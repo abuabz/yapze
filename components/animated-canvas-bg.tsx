@@ -2,10 +2,12 @@
 
 import { useEffect, useRef } from "react"
 
-export function AnimatedCanvasBg() {
+export function AnimatedCanvasBg({ animated = true }: { animated?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
+    if (!animated) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -158,7 +160,7 @@ export function AnimatedCanvasBg() {
       window.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("mouseleave", handleMouseLeave)
     }
-  }, [])
+  }, [animated])
 
   return (
     <div
@@ -169,10 +171,12 @@ export function AnimatedCanvasBg() {
       <div className="absolute inset-0 bg-slate-950/65 z-0 pointer-events-none" />
 
       {/* The animated interactive particle mesh */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-10 pointer-events-none w-full h-full block"
-      />
+      {animated && (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 z-10 pointer-events-none w-full h-full block"
+        />
+      )}
     </div>
   )
 }

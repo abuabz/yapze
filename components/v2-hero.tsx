@@ -1,24 +1,46 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Shield, Cpu, Cloud, Terminal, ArrowRight, Activity, CpuIcon } from "lucide-react"
+import dynamic from "next/dynamic"
+import { motion } from "framer-motion"
+import { Shield, Cpu, ArrowRight, Activity } from "lucide-react"
+
+const CodingLottie = dynamic(() => import("./coding-lottie"), { ssr: false })
+
+const words = [
+  "AI-Driven Transformation",
+  "Enterprise-Grade Software",
+  "Smart Cloud Infrastructure",
+  "Advanced Digital Security",
+]
 
 export function V2Hero() {
-  const words = [
-    "Next-Gen Software",
-    "Impenetrable Security",
-    "Cloud Architectures",
-    "Intelligent AI Systems",
-  ]
   const [index, setIndex] = useState(0)
+  const [displayedText, setDisplayedText] = useState("")
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % words.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [words.length])
+    const currentWord = words[index]
+    const isWordComplete = !isDeleting && displayedText === currentWord
+    const delay = isDeleting ? 15 : isWordComplete ? 700 : 45
+
+    const timeout = setTimeout(() => {
+      if (isWordComplete) {
+        setIsDeleting(true)
+      } else if (isDeleting) {
+        if (displayedText.length === 0) {
+          setIsDeleting(false)
+          setIndex((currentIndex) => (currentIndex + 1) % words.length)
+        } else {
+          setDisplayedText(displayedText.slice(0, -1))
+        }
+      } else {
+        setDisplayedText(currentWord.slice(0, displayedText.length + 1))
+      }
+    }, delay)
+
+    return () => clearTimeout(timeout)
+  }, [displayedText, index, isDeleting, words])
 
   // Count up stats animation variables
   const stats = [
@@ -52,23 +74,21 @@ export function V2Hero() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight"
+              className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight"
             >
               We Engineer <br />
-              <div className="h-[1.25em] relative overflow-hidden mt-1 pb-2">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="absolute left-0 right-0 inline-block bg-gradient-to-r from-[#8066f7] to-cyan-400 bg-clip-text text-transparent"
-                  >
-                    {words[index]}
-                  </motion.span>
-                </AnimatePresence>
-              </div>
+              <span className="mt-1 grid pb-2">
+                {/* Invisible copies reserve space for the tallest phrase so wrapped lines are never clipped */}
+                {words.map((word) => (
+                  <span key={word} aria-hidden="true" className="invisible col-start-1 row-start-1">
+                    {word}
+                  </span>
+                ))}
+                <span className="col-start-1 row-start-1 bg-gradient-to-r from-[#8066f7] to-cyan-400 bg-clip-text text-transparent">
+                  {displayedText}
+                  <span className="ml-0.5 animate-pulse text-cyan-400" aria-hidden="true">|</span>
+                </span>
+              </span>
             </motion.h1>
 
             <motion.p
@@ -124,42 +144,15 @@ export function V2Hero() {
           </motion.div>
         </div>
 
-        {/* Right Side - Futuristic Glass Image Frame */}
+        {/* Right Side - Coding & development Lottie animation */}
         <div className="lg:col-span-5 relative flex justify-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-[400px] glassmorphism border border-primary/20 rounded-3xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden group hover:border-primary/40 transition-all duration-500"
+            className="w-full max-w-[480px]"
           >
-            {/* Ambient inner glow reflection effect */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#8066f7]/5 to-[#8066f7]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
-
-            <div className="relative overflow-hidden rounded-2xl border border-white/5 shadow-inner">
-              {/* Float & Scale animation on the image itself */}
-              <motion.img
-                src="/yapazelandingimg.png"
-                alt="YaPaze Technologies Ecosystem"
-                className="w-full h-auto object-cover aspect-[4/3] sm:aspect-square transform group-hover:scale-105 transition-transform duration-700"
-                animate={{
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              />
-            </div>
-
-            {/* Glowing tech identifier tag */}
-            <div className="flex items-center justify-between mt-4 px-2 font-mono text-[10px] text-slate-400">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                <span>ECOSYSTEM_VIEW_01</span>
-              </div>
-              <span className="text-primary font-bold">SYSTEMS_ACTIVE</span>
-            </div>
+            <CodingLottie className="w-full h-auto" />
           </motion.div>
         </div>
 
