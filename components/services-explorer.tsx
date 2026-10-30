@@ -53,9 +53,9 @@ export function ServicesExplorer() {
 
   return (
     <section ref={sectionRef} id="explore" className="relative scroll-mt-28 px-4 sm:px-6 lg:px-8 pb-24">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-12">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-12">
         {/* Tabs */}
-        <div className="lg:col-span-4">
+        <div className="min-w-0 lg:col-span-4">
           <div
             role="tablist"
             aria-label="YaPaze services"
@@ -78,7 +78,7 @@ export function ServicesExplorer() {
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => select(service.id)}
                   onKeyDown={(event) => handleKeyDown(event, index)}
-                  className="group relative w-[16.5rem] shrink-0 snap-start rounded-2xl px-4 py-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-primary lg:w-full"
+                  className="group relative w-[14rem] shrink-0 snap-start sm:w-[16.5rem] rounded-2xl px-4 py-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-primary lg:w-full"
                 >
                   {isActive ? (
                     <motion.span
@@ -122,7 +122,7 @@ export function ServicesExplorer() {
         </div>
 
         {/* Panel */}
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-8">
           <AnimatePresence mode="wait">
             <ServicePanel key={active.id} service={active} onNext={() => select(next.id)} nextTitle={next.title} />
           </AnimatePresence>
@@ -162,17 +162,17 @@ function ServicePanel({
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute right-6 top-2 select-none text-[9rem] font-extrabold leading-none text-white/[0.04] sm:text-[11rem]"
+        className="pointer-events-none absolute right-6 top-2 select-none text-[6rem] font-extrabold leading-none text-white/[0.04] sm:text-[11rem]"
       >
         {service.number}
       </span>
 
-      <div className="relative space-y-10 p-6 sm:p-10">
+      <div className="relative space-y-8 p-5 sm:space-y-10 sm:p-10">
         {/* Header */}
         <div className="space-y-5">
           <div className="flex items-center gap-4">
             <motion.div
-              className={`relative grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br ${service.gradient} shadow-lg`}
+              className={`relative grid h-14 w-14 shrink-0 place-items-center sm:h-16 sm:w-16 rounded-2xl bg-gradient-to-br ${service.gradient} shadow-lg`}
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             >
@@ -189,9 +189,9 @@ function ServicePanel({
           </div>
 
           <div className="space-y-3">
-            <h3 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{service.title}</h3>
+            <h3 className="break-words text-2xl font-extrabold tracking-tight text-white sm:text-4xl">{service.title}</h3>
             <p
-              className={`bg-gradient-to-r ${service.gradient} bg-clip-text text-lg font-semibold text-transparent sm:text-xl`}
+              className={`bg-gradient-to-r ${service.gradient} bg-clip-text text-base font-semibold text-transparent sm:text-xl`}
             >
               {service.tagline}
             </p>
@@ -253,10 +253,10 @@ function ServicePanel({
         </div>
 
         {/* Actions */}
-        <div className="flex flex-wrap items-center gap-4 border-t border-white/10 pt-8">
+        <div className="flex flex-col items-stretch gap-3 border-t border-white/10 pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:pt-8">
           <Link
             href={service.cta.href}
-            className="group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#8066f7] px-7 py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#6b51e2] hover:shadow-[0_0_30px_rgba(128,102,247,0.5)]"
+            className="group inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#8066f7] px-7 py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#6b51e2] hover:shadow-[0_0_30px_rgba(128,102,247,0.5)]"
           >
             <span>{service.cta.label}</span>
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -264,7 +264,7 @@ function ServicePanel({
           <button
             type="button"
             onClick={onNext}
-            className="group inline-flex items-center gap-2 rounded-xl px-4 py-3.5 text-sm font-semibold text-slate-400 transition-colors hover:text-white"
+            className="group inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-center text-sm font-semibold text-slate-400 transition-colors hover:text-white"
           >
             <span>Next: {nextTitle}</span>
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

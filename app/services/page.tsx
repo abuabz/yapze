@@ -68,8 +68,8 @@ export default function ServicesPage() {
 
         {/* Closing CTA */}
         <section className="px-4 pb-24 sm:px-6 lg:px-8">
-          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/20 via-white/[0.03] to-cyan-500/10 p-10 text-center backdrop-blur-xl sm:p-14">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">Have a project in mind?</h2>
+          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/20 via-white/[0.03] to-cyan-500/10           p-6 text-center backdrop-blur-xl sm:p-14">
+                      <h2 className="text-2xl font-extrabold text-white sm:text-4xl">Have a project in mind?</h2>
             <p className="mx-auto mt-4 max-w-xl text-slate-300">
               Tell us what you are building and we will map the fastest, safest route to get it live.
             </p>
