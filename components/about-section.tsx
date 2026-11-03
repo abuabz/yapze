@@ -1,7 +1,7 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
-import { useState } from "react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
+import { useState, useRef } from "react"
 import {
   Zap,
   Users,
@@ -16,6 +16,15 @@ import Link from "next/link"
 
 export function AboutSection() {
   const [activeTab, setActiveTab] = useState<'mission' | 'vision'>('mission')
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  })
+
+  const orbParallaxY = useTransform(scrollYProgress, [0, 1], [-70, 70])
+  const sphereParallaxY = useTransform(scrollYProgress, [0, 1], [-30, 30])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,9 +47,12 @@ export function AboutSection() {
 
 
   return (
-    <section id="about" className="relative min-h-screen flex items-center py-20 overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+    <section ref={sectionRef} id="about" className="relative min-h-screen flex items-center py-20 overflow-hidden">
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <motion.div
+          style={{ y: orbParallaxY }}
+          className="absolute top-1/2 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
+        />
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -111,8 +123,9 @@ export function AboutSection() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row items-center gap-16 md:gap-24 relative">
 
-              {/* Left Side: Glowing Sphere Toggle */}
-              <div
+              {/* Left Side: Glowing Sphere Toggle with scroll parallax */}
+              <motion.div
+                style={{ y: sphereParallaxY }}
                 className="relative group cursor-pointer"
                 onClick={() => setActiveTab(activeTab === 'mission' ? 'vision' : 'mission')}
                 onMouseEnter={() => setActiveTab(activeTab === 'mission' ? 'vision' : 'mission')}
@@ -172,7 +185,7 @@ export function AboutSection() {
 
                 {/* Info tool-tip-like text */}
 
-              </div>
+              </motion.div>
 
               {/* Right Side: Content Wrapper */}
               <div className="flex-1 space-y-12 relative">
