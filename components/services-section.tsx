@@ -1,289 +1,483 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
+import Link from "next/link"
+import { motion, AnimatePresence, useScroll } from "framer-motion"
 import {
-  Globe,
-  Cpu,
-  Shield,
-  Cloud,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  Code2,
+  PenTool,
+  Rocket,
   Search,
+  Lightbulb,
+  Target,
+  Shield,
   Zap,
   RefreshCw,
   HeartHandshake,
   Users,
-  Target,
-  Lightbulb,
 } from "lucide-react"
+import { services } from "@/lib/services-data"
 
-const services = [
-  {
-    icon: Globe,
-    gradient: "from-blue-500 to-cyan-500",
-    title: "Web & App Development",
-    items: [
-      "Responsive business websites with modern UI/UX",
-      "Scalable e-commerce platforms with secure payments",
-      "Custom mobile apps (iOS & Android) for all industries",
-    ],
-  },
-  {
-    icon: Cpu,
-    gradient: "from-purple-500 to-pink-500",
-    title: "Software Solutions",
-    items: [
-      "Custom ERP & CRM systems for SMEs and enterprises",
-      "Workflow automation & process optimization tools",
-      "Real-time analytics dashboards and reporting",
-    ],
-  },
-  {
-    icon: Shield,
-    gradient: "from-red-500 to-orange-500",
-    title: "Cybersecurity Services",
-    items: [
-      "End-to-end network security & penetration testing",
-      "Threat detection, monitoring & incident response",
-      "Data encryption and compliance (GDPR, HIPAA, etc.)",
-    ],
-  },
-  {
-    icon: Cloud,
-    gradient: "from-indigo-500 to-blue-600",
-    title: "Cloud Computing & IT Services",
-    items: [
-      "Cloud migration (AWS, Azure, Google Cloud)",
-      "24/7 managed IT support and infrastructure monitoring",
-      "Virtualization & disaster recovery planning",
-    ],
-  },
-  {
-    icon: Search,
-    gradient: "from-green-500 to-emerald-600",
-    title: "Digital Marketing",
-    items: [
-      "SEO strategies that tripled organic traffic for clients",
-      "High-ROI social media & Google Ads campaigns",
-      "Complete branding, content & online presence growth",
-    ],
-  },
+const process = [
+  { icon: Search, title: "Discover", desc: "We learn your goals, users and constraints before writing a single line." },
+  { icon: PenTool, title: "Design", desc: "Clear architecture and interfaces you can review and approve early." },
+  { icon: Code2, title: "Build", desc: "Iterative delivery with regular demos, testing and security built in." },
+  { icon: Rocket, title: "Launch & Support", desc: "Smooth go-live, monitoring and ongoing improvement." },
 ]
+
 const values = [
   {
-    icon: <Lightbulb className="w-8 h-8" />,
+    icon: Lightbulb,
     title: "Innovation",
     desc: "We constantly explore new ideas and emerging technologies to deliver future-ready digital solutions.",
   },
   {
-    icon: <Target className="w-8 h-8" />,
+    icon: Target,
     title: "Customer Focus",
     desc: "We place our clients at the heart of every decision, delivering value-driven technology that meets real business needs.",
   },
   {
-    icon: <Shield className="w-8 h-8" />,
+    icon: Shield,
     title: "Integrity",
     desc: "We operate with transparency, honesty, and ethical responsibility in every interaction and project.",
   },
   {
-    icon: <Zap className="w-8 h-8" />,
+    icon: Zap,
     title: "Quality Excellence",
     desc: "We maintain high standards and deliver reliable, secure, and scalable IT solutions with precision.",
   },
   {
-    icon: <Shield className="w-9 h-9" />,
-    // Slightly bigger for emphasis
+    icon: Shield,
     title: "Security First",
     desc: "We prioritize data protection and cybersecurity to ensure safe and trusted digital environments.",
   },
   {
-    icon: <RefreshCw className="w-8 h-8" />,
+    icon: RefreshCw,
     title: "Continuous Improvement",
     desc: "We learn, evolve, and invest in our skills and processes to stay ahead in a fast-changing tech world.",
   },
   {
-    icon: <HeartHandshake className="w-8 h-8" />,
+    icon: HeartHandshake,
     title: "Collaboration",
     desc: "We believe in teamwork—working closely with clients and partners to unlock innovation and achieve shared goals.",
   },
   {
-    icon: <Users className="w-8 h-8" />,
+    icon: Users,
     title: "Empowerment",
     desc: "We empower businesses with the tools and knowledge to leverage technology for growth and success.",
-  }
+  },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-  },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
-  },
-}
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8 },
-  },
-}
-
 export function ServicesSection() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const trackRef = useRef<HTMLDivElement>(null)
+  const isClickingRef = useRef(false)
+
+  const active = services[activeIndex]
+  const next = services[(activeIndex + 1) % services.length]
+  const ActiveIcon = active.icon
+
+  // Track user scroll progress through the pinned track
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start start", "end end"],
+  })
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      if (isClickingRef.current) return
+      // Map progress (0 to 1) into service index (0 to 5)
+      const index = Math.min(
+        services.length - 1,
+        Math.max(0, Math.floor(latest * services.length))
+      )
+      setActiveIndex(index)
+    })
+    return () => unsubscribe()
+  }, [scrollYProgress])
+
+  // Allow clicking tabs or progress pills to smoothly scroll to that service's scroll position
+  const handleSelect = (index: number) => {
+    isClickingRef.current = true
+    setActiveIndex(index)
+
+    if (trackRef.current) {
+      const rect = trackRef.current.getBoundingClientRect()
+      const scrollTop = window.scrollY + rect.top
+      const maxScroll = rect.height - window.innerHeight
+      if (maxScroll > 0) {
+        const targetProgress = (index + 0.5) / services.length
+        const targetScrollY = scrollTop + targetProgress * maxScroll
+
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: "smooth",
+        })
+      }
+    }
+
+    setTimeout(() => {
+      isClickingRef.current = false
+    }, 700)
+  }
+
+  const handleNext = () => {
+    const nextIdx = (activeIndex + 1) % services.length
+    handleSelect(nextIdx)
+  }
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const steps: Record<string, number> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }
+    const step = steps[event.key]
+    if (!step) return
+    event.preventDefault()
+    const targetIdx = (index + step + services.length) % services.length
+    handleSelect(targetIdx)
+  }
+
   return (
-    <section id="services" className="relative py-10 px-6 overflow-hidden bg-gradient-to-b from-background to-background/95">
-      {/* Background Blobs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/2 -right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-500" />
+    <section id="services" className="relative scroll-mt-20 bg-background">
+      {/* Ambient background glow & tech grid */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-0 overflow-hidden">
+        <div className="absolute left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[140px]" />
+        <div className="absolute right-0 top-1/3 h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-fuchsia-500/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
       </div>
 
-      <div className="max-w-7xl mx-auto">
-        {/* Header – Fixed syntax error was here */}
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            What<span className="gradient-text"> We Do</span>
-          </h2>
-          <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
-            At YaPaze Technologies, we take pride in delivering innovative, secure, and scalable solutions across industries.
-            <br className="hidden md:block" />
-          </p>
-        </motion.div>
+      {/* Pinned Scroll Track: Cycles through services 01 to 06, then unpins to next section */}
+      <div ref={trackRef} className="relative lg:h-[480vh]">
+        <div className="lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 z-10 pt-16 sm:pt-20 pb-4">
+          <div className="mx-auto w-full max-w-7xl xl:max-w-[1360px] flex flex-col justify-center">
+            {/* Header Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5 pb-3 border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-3.5">
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Our Capabilities</span>
+                <span className="text-slate-600 hidden sm:inline">•</span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                  What <span className="gradient-text">We Do</span>
+                </h2>
+                <span className="text-slate-600 hidden sm:inline">•</span>
+                <span className="font-mono text-xs font-semibold text-slate-400 hidden sm:inline">
+                  Service <span className="text-white font-bold" style={{ color: active.accent }}>{active.number}</span> / 06
+                </span>
+              </div>
 
-        {/* Services Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {services.map((service, index) => {
-            const Icon = service.icon
-            return (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                whileHover={{ y: -8, transition: { duration: 0.4 } }}
-                className="group glassmorphism rounded-2xl p-6 border border-white/10 
-                           hover:border-primary/50 backdrop-blur-xl
-                           transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} p-3 mb-4 
-                              group-hover:scale-110 transition-transform duration-500 shadow-lg`}
-                >
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-
-                <h3 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors leading-tight">
-                  {service.title}
-                </h3>
-
-                <ul className="space-y-2">
-                  {service.items.map((item, i) => (
-                    <motion.li
-                      key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 + 0.3 }}
-                      viewport={{ once: true }}
-                      className="flex items-start gap-2 text-foreground/70"
+              {/* Interactive Scroll Segment Indicators */}
+              <div className="flex items-center gap-2">
+                {services.map((service, index) => {
+                  const isActive = index === activeIndex
+                  const isPassed = index < activeIndex
+                  return (
+                    <button
+                      key={service.id}
+                      type="button"
+                      onClick={() => handleSelect(index)}
+                      title={`Service ${service.number}: ${service.title}`}
+                      aria-label={`Jump to ${service.title}`}
+                      className="group py-1 focus:outline-none"
                     >
-                      <Zap className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
-                      <span className="text-sm leading-tight">{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
+                      <span
+                        className={`block h-2 rounded-full transition-all duration-300 ${
+                          isActive
+                            ? "w-8 shadow-sm"
+                            : isPassed
+                            ? "w-3 bg-white/40 group-hover:bg-white/60"
+                            : "w-3 bg-white/15 group-hover:bg-white/30"
+                        }`}
+                        style={{
+                          backgroundColor: isActive ? service.accent : undefined,
+                          boxShadow: isActive ? `0 0 12px ${service.accent}99` : undefined,
+                        }}
+                      />
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
 
-                <motion.div
-                  className="mt-6 flex items-center gap-2 text-primary font-bold text-sm opacity-0 group-hover:opacity-100 
-                             translate-x-[-10px] group-hover:translate-x-0 transition-all duration-500"
+            {/* Main Interactive Explorer */}
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start lg:items-center min-h-0">
+              {/* Left Column: Generous Width Tabs (No Truncation) */}
+              <div className="w-full lg:w-64 xl:w-72 shrink-0">
+                <div
+                  role="tablist"
+                  aria-label="YaPaze services"
+                  className="-mx-4 flex gap-2.5 overflow-x-auto px-4 pb-2 snap-x lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [scrollbar-width:none]"
                 >
-                  <span>Explore Service</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </motion.div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+                  {services.map((service, index) => {
+                    const isActive = index === activeIndex
+                    const Icon = service.icon
+                    return (
+                      <button
+                        key={service.id}
+                        role="tab"
+                        id={`home-tab-${service.id}`}
+                        aria-selected={isActive}
+                        tabIndex={isActive ? 0 : -1}
+                        onClick={() => handleSelect(index)}
+                        onKeyDown={(event) => handleKeyDown(event, index)}
+                        className={`group relative flex items-center gap-3.5 px-4 py-3 sm:py-3.5 rounded-xl text-left transition-all duration-200 outline-none w-auto shrink-0 snap-start lg:w-full ${
+                          isActive
+                            ? "text-white font-semibold"
+                            : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.span
+                            layoutId="home-service-tab-bg"
+                            className="absolute inset-0 rounded-xl border border-white/15 bg-white/[0.08]"
+                            style={{
+                              boxShadow: `0 6px 25px ${service.accent}25`,
+                              borderColor: `${service.accent}60`,
+                            }}
+                            transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                          />
+                        )}
 
-        {/* CTA */}
-        <motion.div
-          className="text-center mt-20"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-        >
-          <button className="px-5 py-5 bg-primary text-white text-lg font-bold rounded-full 
-                             hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/25 
-                             transform hover:scale-105 transition-all duration-300">
-            Start Your Project Today
-          </button>
-        </motion.div>
+                        <span
+                          className="relative z-10 font-mono text-xs font-bold shrink-0 transition-colors"
+                          style={{ color: isActive ? service.accent : "#64748b" }}
+                        >
+                          {service.number}
+                        </span>
 
-        <motion.section
-          className="mt-20 py-16 px-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.h3
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-primary via-blue-600 to-purple-600 bg-clip-text text-transparent"
-          >
-            Core Values of <span className="gradient-text">YaPaze Technologies</span>
-          </motion.h3>
+                        <span className="relative z-10 text-sm font-medium flex-1">
+                          {service.title}
+                        </span>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                variants={itemVariants}
-                whileHover={{ y: -5, transition: { duration: 0.3 } }}
-                className="group glassmorphism rounded-xl p-5 border border-white/10 hover:border-primary/60 
-                       backdrop-blur-xl transition-all duration-500 hover:shadow-lg hover:shadow-primary/5"
-              >
-                <div className="flex flex-col items-center text-center space-y-3">
-                  <div
-                    className="p-3 rounded-full bg-gradient-to-br from-primary/20 
-                           group-hover:from-primary/40 transition-all duration-500"
+                        <Icon
+                          className="relative z-10 h-4 w-4 shrink-0 transition-colors"
+                          style={{ color: isActive ? service.accent : "#64748b" }}
+                        />
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Right Column: Generous, Beautifully Sized Service Panel */}
+              <div className="flex-1 min-w-0 w-full">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={active.id}
+                    role="tabpanel"
+                    id={`home-panel-${active.id}`}
+                    aria-labelledby={`home-tab-${active.id}`}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 sm:p-8"
+                    style={{ boxShadow: `0 25px 80px -15px ${active.accent}25` } as CSSProperties}
                   >
-                    <div className="text-primary group-hover:scale-110 transition-transform duration-300">
-                      {/* Using smaller icons for core values as well */}
-                      <div className="w-6 h-6 flex items-center justify-center">
-                        {value.icon}
+                    {/* Glowing Accent Orb */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-25 blur-3xl"
+                      style={{ background: active.accent }}
+                    />
+                    {/* Watermark Number */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-6 -top-2 select-none text-[6rem] sm:text-[9rem] font-extrabold leading-none text-white/[0.03]"
+                    >
+                      {active.number}
+                    </span>
+
+                    <div className="relative space-y-5 sm:space-y-6">
+                      {/* Top Header */}
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
+                        <div className="flex items-center gap-3.5">
+                          <div
+                            className={`relative grid h-12 w-12 sm:h-14 sm:w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${active.gradient} shadow-lg`}
+                          >
+                            <ActiveIcon className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                              {active.title}
+                            </h3>
+                            <p
+                              className={`bg-gradient-to-r ${active.gradient} bg-clip-text text-sm sm:text-base font-semibold text-transparent mt-0.5`}
+                            >
+                              {active.tagline}
+                            </p>
+                          </div>
+                        </div>
+
+                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-md hidden md:block">
+                          {active.description}
+                        </p>
+                      </div>
+
+                      {/* What We Deliver: 2-Column Grid (No Truncation, Generous Space) */}
+                      <div className="space-y-2.5">
+                        <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+                          What we deliver
+                        </h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                          {active.features.map((feature) => (
+                            <div
+                              key={feature.title}
+                              className="rounded-xl border border-white/10 bg-black/40 p-3.5 sm:p-4 transition-all duration-300 hover:border-white/25 hover:bg-black/60"
+                            >
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <div
+                                  className={`grid h-5 w-5 shrink-0 place-items-center rounded bg-gradient-to-br ${active.gradient}`}
+                                >
+                                  <Check className="h-3 w-3 text-white" strokeWidth={3} />
+                                </div>
+                                <h5 className="text-sm font-semibold text-white">{feature.title}</h5>
+                              </div>
+                              <p className="text-xs leading-relaxed text-slate-400">{feature.desc}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Outcomes & Tech Stack */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 pt-1">
+                        <div className="space-y-2">
+                          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+                            What you get
+                          </h4>
+                          <ul className="space-y-2">
+                            {active.outcomes.map((outcome) => (
+                              <li key={outcome} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                                <ArrowRight className="mt-0.5 h-4 w-4 shrink-0" style={{ color: active.accent }} />
+                                <span className="leading-snug">{outcome}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="space-y-2">
+                          <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+                            Tools & expertise
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {active.tech.map((item) => (
+                              <span
+                                key={item}
+                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300 transition-colors hover:border-white/30 hover:text-white"
+                              >
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Links */}
+                      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-4 sm:pt-5">
+                        <Link
+                          href={active.cta.href}
+                          className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#8066f7] px-7 py-3 text-sm font-bold text-white transition-all duration-300 hover:bg-[#6b51e2] hover:shadow-[0_0_25px_rgba(128,102,247,0.5)]"
+                        >
+                          <span>{active.cta.label}</span>
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={handleNext}
+                          className="group inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-400 transition-colors hover:text-white"
+                        >
+                          <span>Next: {next.title}</span>
+                          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </button>
                       </div>
                     </div>
-                  </div>
-
-                  <h4 className="text-lg font-bold text-foreground">{value.title}</h4>
-                  <p className="text-muted-foreground text-xs leading-normal">
-                    {value.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
           </div>
-        </motion.section>
+        </div>
+      </div>
+
+      {/* Next Section: How we work (flows smoothly once the 6th service is finished scrolling) */}
+      <div className="relative z-10 px-4 pb-24 sm:px-6 lg:px-8 pt-16">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">How we work</p>
+            <h3 className="text-3xl font-extrabold text-white sm:text-4xl">
+              One process. <span className="gradient-text">Every service.</span>
+            </h3>
+          </motion.div>
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {process.map((step, index) => {
+              const Icon = step.icon
+              return (
+                <motion.li
+                  key={step.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
+                >
+                  <span className="absolute right-5 top-4 font-mono text-4xl font-extrabold text-white/[0.06]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h4 className="mb-2 text-lg font-bold text-white">{step.title}</h4>
+                  <p className="text-sm leading-relaxed text-slate-400">{step.desc}</p>
+                </motion.li>
+              )
+            })}
+          </ol>
+        </div>
+      </div>
+
+      {/* Next Section: Core Values */}
+      <div className="relative z-10 px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            className="mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">Our Foundation</p>
+            <h3 className="text-3xl font-extrabold text-white sm:text-4xl">
+              Core Values of <span className="gradient-text">YaPaze Technologies</span>
+            </h3>
+          </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {values.map((value, index) => {
+              const Icon = value.icon
+              return (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.5 }}
+                  className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
+                >
+                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary group-hover:scale-110 transition-transform">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h4 className="mb-2 text-base font-bold text-white">{value.title}</h4>
+                  <p className="text-xs leading-relaxed text-slate-400">{value.desc}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     </section>
   )
