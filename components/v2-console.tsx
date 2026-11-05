@@ -24,7 +24,9 @@ export function V2Console() {
   const consoleEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    consoleEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    // Scroll only the console container (scrollIntoView would scroll the whole page to the bottom)
+    const container = consoleEndRef.current?.parentElement
+    if (container) container.scrollTop = container.scrollHeight
   }, [logs])
 
   // Simulate subtle ambient system changes

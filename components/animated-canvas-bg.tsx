@@ -24,7 +24,7 @@ export function AnimatedCanvasBg({ animated = true }: { animated?: boolean }) {
       particleColor: "rgba(128, 102, 247, 0.4)",
       lineColor: "rgba(128, 102, 247, 0.12)",
       particleRadius: 2.5,
-      particleCount: 75,
+      particleCount: window.innerWidth < 768 ? 30 : 60,
       maxVelocity: 0.6,
       lineLength: 140,
     }
@@ -147,15 +147,22 @@ export function AnimatedCanvasBg({ animated = true }: { animated?: boolean }) {
       mouse.y = null
     }
 
+    const handleVisibility = () => {
+      cancelAnimationFrame(animationFrameId)
+      if (!document.hidden) loop()
+    }
+
     window.addEventListener("resize", handleResize)
-    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mousemove", handleMouseMove, { passive: true })
     document.addEventListener("mouseleave", handleMouseLeave)
+    document.addEventListener("visibilitychange", handleVisibility)
 
     init()
     loop()
 
     return () => {
       cancelAnimationFrame(animationFrameId)
+      document.removeEventListener("visibilitychange", handleVisibility)
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("mouseleave", handleMouseLeave)
@@ -164,7 +171,7 @@ export function AnimatedCanvasBg({ animated = true }: { animated?: boolean }) {
 
   return (
     <div
-      className="absolute inset-0 -z-10 w-full h-full bg-cover bg-center bg-no-repeat"
+      className="fixed inset-0 -z-10 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none"
       style={{ backgroundImage: "url('/yapazelandingimg.png')" }}
     >
       {/* Dark overlay for contrast and legibility */}

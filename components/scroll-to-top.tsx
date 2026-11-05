@@ -8,15 +8,17 @@ export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+    // Always open at the top instead of restoring a stale/bottom scroll position
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual"
+    if (!window.location.hash) window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior })
+  }, [])
+
+  useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
+      setIsVisible(window.scrollY > 300)
     }
 
-    window.addEventListener("scroll", toggleVisibility)
+    window.addEventListener("scroll", toggleVisibility, { passive: true })
     return () => window.removeEventListener("scroll", toggleVisibility)
   }, [])
 
