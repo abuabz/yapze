@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion"
 import {
   Terminal,
@@ -18,6 +19,7 @@ import {
 
 export function Hero3DConsole() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const lite = useIsMobile()
   const [activeTab, setActiveTab] = useState<"code" | "pipeline" | "security">("code")
   const [typedLines, setTypedLines] = useState(6)
 
@@ -72,28 +74,22 @@ export function Hero3DConsole() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-[560px] mx-auto py-6 [perspective:1400px] select-none"
+      className="relative w-full max-w-[560px] mx-auto py-6 md:[perspective:1400px] select-none"
     >
       {/* Background 3D Cyber Mesh Grid */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl bg-gradient-to-tr from-[#8066f7]/40 via-cyan-500/20 to-blue-600/30"
+        className="pointer-events-none hidden md:block absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl bg-gradient-to-tr from-[#8066f7]/40 via-cyan-500/20 to-blue-600/30"
       />
 
       {/* 3D Tilting Canvas */}
       <motion.div
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        animate={{
-          y: [0, -8, 0],
-        }}
+        style={lite ? undefined : { rotateX, rotateY, transformStyle: "preserve-3d" }}
+        animate={lite ? undefined : { y: [0, -8, 0] }}
         transition={{
           y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
         }}
-        className="relative rounded-3xl border border-white/15 bg-[#090b14]/90 backdrop-blur-2xl p-1 shadow-[0_30px_100px_-20px_rgba(128,102,247,0.35)]"
+        className="relative rounded-3xl border border-white/15 bg-[#090b14]/90 md:backdrop-blur-2xl p-1 shadow-[0_30px_100px_-20px_rgba(128,102,247,0.35)]"
       >
         {/* Subtle Top Edge Highlight */}
         <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
@@ -148,11 +144,11 @@ export function Hero3DConsole() {
           {/* Code Body */}
           <div className="p-4 sm:p-5 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden relative min-h-[260px]">
             {/* Animated Laser Scanline Effect */}
-            <motion.div
+            {!lite && <motion.div
               animate={{ y: [0, 260, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
               className="pointer-events-none absolute inset-x-0 h-16 bg-gradient-to-b from-cyan-500/0 via-cyan-400/5 to-cyan-500/0 opacity-60"
-            />
+            />}
 
             {activeTab === "code" && (
               <div className="space-y-1">
@@ -305,20 +301,18 @@ export function Hero3DConsole() {
 
         {/* 3D Floating Glass Widget 1: Security Shield (Top-Right, high depth + scroll parallax) */}
         <motion.div
-          style={{ y: widgetShieldParallaxY }}
+          style={lite ? undefined : { y: widgetShieldParallaxY }}
           className="absolute -top-4 -right-1 sm:-top-5 sm:-right-6 z-20 pointer-events-none"
         >
           <motion.div
-            animate={{
-              y: [0, -6, 0],
-            }}
+            animate={lite ? undefined : { y: [0, -6, 0] }}
             transition={{
               duration: 4.5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            style={{ transform: "translateZ(55px)" }}
-            className="rounded-xl sm:rounded-2xl border border-emerald-500/30 bg-[#08131d]/90 backdrop-blur-xl p-2 sm:p-3.5 shadow-[0_15px_40px_rgba(16,185,129,0.25)] flex items-center gap-2 sm:gap-3 pointer-events-auto"
+            style={lite ? undefined : { transform: "translateZ(55px)" }}
+            className="rounded-xl sm:rounded-2xl border border-emerald-500/30 bg-[#08131d]/90 md:backdrop-blur-xl p-2 sm:p-3.5 shadow-[0_15px_40px_rgba(16,185,129,0.25)] flex items-center gap-2 sm:gap-3 pointer-events-auto"
           >
             <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.4)]">
               <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -335,21 +329,19 @@ export function Hero3DConsole() {
 
         {/* 3D Floating Glass Widget 2: Latency & Speed HUD (Bottom-Left, depth + scroll parallax) */}
         <motion.div
-          style={{ y: widgetLatencyParallaxY }}
+          style={lite ? undefined : { y: widgetLatencyParallaxY }}
           className="absolute -bottom-5 -left-1 sm:-bottom-6 sm:-left-6 z-20 pointer-events-none"
         >
           <motion.div
-            animate={{
-              y: [0, 8, 0],
-            }}
+            animate={lite ? undefined : { y: [0, 8, 0] }}
             transition={{
               duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 0.5,
             }}
-            style={{ transform: "translateZ(70px)" }}
-            className="rounded-xl sm:rounded-2xl border border-cyan-500/30 bg-[#07131e]/90 backdrop-blur-xl p-2 sm:p-3.5 shadow-[0_15px_40px_rgba(34,211,238,0.25)] flex items-center gap-2 sm:gap-3 pointer-events-auto"
+            style={lite ? undefined : { transform: "translateZ(70px)" }}
+            className="rounded-xl sm:rounded-2xl border border-cyan-500/30 bg-[#07131e]/90 md:backdrop-blur-xl p-2 sm:p-3.5 shadow-[0_15px_40px_rgba(34,211,238,0.25)] flex items-center gap-2 sm:gap-3 pointer-events-auto"
           >
             <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.4)]">
               <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -363,7 +355,7 @@ export function Hero3DConsole() {
                 {[40, 90, 60, 100, 75, 45, 85].map((height, i) => (
                   <motion.span
                     key={i}
-                    animate={{ height: [`${height * 0.4}%`, `${height}%`, `${height * 0.3}%`] }}
+                    animate={lite ? { height: `${height}%` } : { height: [`${height * 0.4}%`, `${height}%`, `${height * 0.3}%`] }}
                     transition={{ duration: 1 + i * 0.15, repeat: Infinity, ease: "easeInOut" }}
                     className="w-0.5 sm:w-1 rounded-full bg-cyan-400"
                   />
@@ -375,7 +367,7 @@ export function Hero3DConsole() {
 
         {/* 3D Floating Glass Widget 3: AI Neural Engine (Bottom-Right, subtle depth + scroll parallax) */}
         <motion.div
-          style={{ y: widgetNeuralParallaxY }}
+          style={lite ? undefined : { y: widgetNeuralParallaxY }}
           className="hidden sm:block absolute -bottom-5 right-8 z-20 pointer-events-none"
         >
           <motion.div
@@ -389,7 +381,7 @@ export function Hero3DConsole() {
               delay: 1,
             }}
             style={{ transform: "translateZ(45px)" }}
-            className="rounded-2xl border border-purple-500/30 bg-[#120a22]/90 backdrop-blur-xl p-2.5 px-3.5 shadow-[0_15px_40px_rgba(168,85,247,0.25)] flex items-center gap-2.5 pointer-events-auto"
+            className="rounded-2xl border border-purple-500/30 bg-[#120a22]/90 md:backdrop-blur-xl p-2.5 px-3.5 shadow-[0_15px_40px_rgba(168,85,247,0.25)] flex items-center gap-2.5 pointer-events-auto"
           >
             <div className="w-7 h-7 rounded-lg bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.4)]">
               <Cpu className="w-4 h-4" />
