@@ -253,16 +253,9 @@ export function V2Hero() {
         </motion.div>
 
         {/* Right Side - 3D Level Cyber Coding Console with Scroll Parallax */}
-        <motion.div
-          style={{
-            y: yConsole,
-            scale: scaleConsole,
-            rotateX: rotateXConsole,
-          }}
-          className="lg:col-span-5 relative flex justify-center w-full px-1 sm:px-0"
-        >
+        <div className="lg:col-span-5 relative flex justify-center w-full px-1 sm:px-0">
           <Hero3DConsole />
-        </motion.div>
+        </div>
 
       </div>
     </section>
