@@ -4,8 +4,6 @@ import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Shield, Cpu, ArrowRight, Activity, Sparkles, Terminal } from "lucide-react"
 
-import { Hero3DConsole } from "./hero-3d-console"
-
 const words = [
   "AI-Driven Transformation",
   "Enterprise-Grade Software",
@@ -41,11 +39,6 @@ export function V2Hero() {
   // Left Content Parallax (gentle vertical float & graceful fade)
   const yContent = useTransform(smoothScroll, [0, 1], [0, 75])
   const opacityContent = useTransform(smoothScroll, [0, 0.85], [1, 0.2])
-
-  // Right 3D Console Parallax (shifts inversely in depth with subtle 3D tilt-back)
-  const yConsole = useTransform(smoothScroll, [0, 1], [0, -65])
-  const scaleConsole = useTransform(smoothScroll, [0, 1], [1, 0.94])
-  const rotateXConsole = useTransform(smoothScroll, [0, 1], [0, 8])
 
   // Floating ambient cyber crosshairs parallax
   const yCrosshair1 = useTransform(smoothScroll, [0, 1], [0, 160])
@@ -115,7 +108,7 @@ export function V2Hero() {
       </motion.div>
 
       {/* Main Grid Container with Scroll Parallax */}
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center z-10">
+      <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-8 lg:gap-12 items-center z-10">
 
         {/* Left Side Content with Scroll Parallax */}
         <motion.div
@@ -123,7 +116,7 @@ export function V2Hero() {
             y: yContent,
             opacity: opacityContent,
           }}
-          className="lg:col-span-7 text-left space-y-6 sm:space-y-8"
+          className="w-full text-left space-y-6 sm:space-y-8"
         >
           {/* Welcome Badge */}
           <motion.div
@@ -252,13 +245,7 @@ export function V2Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right Side - 3D Level Cyber Coding Console with Scroll Parallax */}
-        <div className="lg:col-span-5 relative flex justify-center w-full px-1 sm:px-0">
-          <Hero3DConsole />
-        </div>
-
       </div>
     </section>
   )
 }
-
