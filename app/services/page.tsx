@@ -1,22 +1,16 @@
 import Link from "next/link"
-import { ArrowRight, Code2, PenTool, Rocket, Search } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ServicesHero } from "@/components/services-hero"
 import { ServicesExplorer } from "@/components/services-explorer"
+import { ProcessSection } from "@/components/process-section"
 
 export const metadata = {
   title: "Services | YaPaze Technologies",
   description:
     "Web & app development, software and business solutions, cybersecurity, cloud and managed IT, SEO and digital marketing, and future skills training from YaPaze Technologies.",
 }
-
-const process = [
-  { icon: Search, title: "Discover", desc: "We learn your goals, users and constraints before writing a single line." },
-  { icon: PenTool, title: "Design", desc: "Clear architecture and interfaces you can review and approve early." },
-  { icon: Code2, title: "Build", desc: "Iterative delivery with regular demos, testing and security built in." },
-  { icon: Rocket, title: "Launch & Support", desc: "Smooth go-live, monitoring and ongoing improvement." },
-]
 
 export default function ServicesPage() {
   return (
@@ -34,37 +28,8 @@ export default function ServicesPage() {
         <ServicesHero />
         <ServicesExplorer />
 
-        {/* How we work */}
-        <section className="px-4 pb-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <div className="mb-12 text-center">
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary">How we work</p>
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-                One process. <span className="gradient-text">Every service.</span>
-              </h2>
-            </div>
-            <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {process.map((step, index) => {
-                const Icon = step.icon
-                return (
-                  <li
-                    key={step.title}
-                    className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
-                  >
-                    <span className="absolute right-5 top-4 font-mono text-4xl font-extrabold text-white/[0.06]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/15 text-primary">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mb-2 text-lg font-bold text-white">{step.title}</h3>
-                    <p className="text-sm leading-relaxed text-slate-400">{step.desc}</p>
-                  </li>
-                )
-              })}
-            </ol>
-          </div>
-        </section>
+        {/* How we work / Process with Unique Shapes & Animations */}
+        <ProcessSection />
 
         {/* Closing CTA */}
         <section className="px-4 pb-24 sm:px-6 lg:px-8">

@@ -6,9 +6,11 @@ import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
 import Image from "next/image"
+import { ConnectModal } from "@/components/connect-modal"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [hoveredHref, setHoveredHref] = useState<string | null>(null)
   const pathname = usePathname()
@@ -42,17 +44,19 @@ export function Navbar() {
 
   return (
     <>
-      <motion.nav
-        className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-50 transition-all duration-300 bg-[#0c0d12]/80 backdrop-blur-xl border border-white/10 rounded-full py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      {/* Floating Header Container with Separated Nav Pill and Connect Us Button */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50 flex items-center justify-between gap-3 pointer-events-none">
+        {/* Main Navigation Pill */}
+        <motion.nav
+          className="pointer-events-auto flex-1 flex items-center justify-between bg-[#0c0d12]/85 backdrop-blur-xl border border-white/10 rounded-full px-4 sm:px-6 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <motion.div className="text-2xl font-bold flex items-center gap-3 " whileHover={{ scale: 1.05 }}>
-              <Image src="/logoandnamewhite.svg" alt="Logo" width={130} height={130} />
+            <motion.div className="text-2xl font-bold flex items-center gap-3" whileHover={{ scale: 1.05 }}>
+              <Image src="/logoandnamewhite.svg" alt="Logo" width={130} height={130} priority />
             </motion.div>
           </Link>
 
@@ -68,7 +72,7 @@ export function Navbar() {
                   onFocus={() => setHoveredHref(item.href)}
                   onBlur={() => setHoveredHref(null)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-300 ${
+                  className={`relative px-4 sm:px-5 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
                     isActive || hoveredHref === item.href ? "text-white" : "text-slate-400"
                   }`}
                 >
@@ -92,20 +96,13 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Right side: CTA Button and Toggle */}
-          <div className="flex items-center gap-4">
+          {/* Mobile Menu Toggle button */}
+          <div className="md:hidden flex items-center">
             <motion.button
-              className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-colors hidden sm:block"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Started
-            </motion.button>
-
-            <motion.button
-              className="p-2 text-foreground hover:text-primary transition-colors md:hidden"
+              className="p-2 text-foreground hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileTap={{ scale: 0.95 }}
+              aria-label="Toggle Menu"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -118,8 +115,28 @@ export function Navbar() {
               )}
             </motion.button>
           </div>
-        </div>
-      </motion.nav>
+        </motion.nav>
+
+        {/* Separated Standalone "Connect Us" Button */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="pointer-events-auto hidden sm:flex shrink-0"
+        >
+          <motion.button
+            onClick={() => setIsConnectModalOpen(true)}
+            aria-label="Connect With Us"
+            className="relative group overflow-hidden px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold text-sm shadow-[0_0_20px_rgba(128,102,247,0.4)] hover:shadow-[0_0_30px_rgba(128,102,247,0.7)] border border-white/20 transition-all duration-300 flex items-center justify-center cursor-pointer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Shimmer sweep */}
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+            <span className="relative z-10">Connect Us</span>
+          </motion.button>
+        </motion.div>
+      </div>
 
       <AnimatePresence>
         {isMenuOpen && (
@@ -178,6 +195,16 @@ export function Navbar() {
                       {link.label}
                     </a>
                   ))}
+
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      setIsConnectModalOpen(true)
+                    }}
+                    className="mt-2 text-sm font-bold text-center px-6 py-3 rounded-full bg-primary text-white shadow-[0_0_20px_rgba(128,102,247,0.5)] cursor-pointer"
+                  >
+                    Connect Us
+                  </button>
                 </motion.div>
               </div>
 
@@ -193,6 +220,12 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Connect Modal with WhatsApp Redirection */}
+      <ConnectModal
+        isOpen={isConnectModalOpen}
+        onClose={() => setIsConnectModalOpen(false)}
+      />
     </>
   )
 }

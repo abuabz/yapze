@@ -134,12 +134,10 @@ export function ServicesExplorer() {
 
 function ServicePanel({
   service,
-  onNext,
-  nextTitle,
 }: {
   service: (typeof services)[number]
-  onNext: () => void
-  nextTitle: string
+  onNext?: () => void
+  nextTitle?: string
 }) {
   const Icon = service.icon
 
@@ -253,7 +251,7 @@ function ServicePanel({
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col items-stretch gap-3 border-t border-white/10 pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:pt-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-white/10 pt-6 sm:pt-8">
           <Link
             href={service.cta.href}
             className="group inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#8066f7] px-7 py-3.5 font-bold text-white transition-all duration-300 hover:bg-[#6b51e2] hover:shadow-[0_0_30px_rgba(128,102,247,0.5)]"
@@ -261,14 +259,6 @@ function ServicePanel({
             <span>{service.cta.label}</span>
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
-          <button
-            type="button"
-            onClick={onNext}
-            className="group inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-center text-sm font-semibold text-slate-400 transition-colors hover:text-white"
-          >
-            <span>Next: {nextTitle}</span>
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </button>
         </div>
       </div>
     </motion.div>

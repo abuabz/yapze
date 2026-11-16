@@ -3,22 +3,31 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import {
   ArrowRight,
-  Play,
   Sparkles,
-  CheckCircle2,
-  Globe2,
-  Users2,
-  Briefcase,
   ChevronRight,
+  Lightbulb,
+  Target,
+  Shield,
+  Zap,
+  RefreshCw,
+  HeartHandshake,
+  Users,
+  ShieldCheck,
+  Cpu,
+  Layers,
+  Activity,
+  Terminal,
+  Server,
+  Lock,
 } from "lucide-react"
 
-// 4 Core Pillars from the reference design
+// 4 Core Pillars with 3D Wireframe Geometries
 const pillars = [
   {
     title: "expertise",
@@ -26,7 +35,6 @@ const pillars = [
       "Our team of experienced experts have the knowledge and expertise to deliver innovative IT solutions that meet your unique needs.",
     wireframe: (
       <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        {/* Geodesic / Wireframe Torus Sphere */}
         <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
         <ellipse cx="50" cy="50" rx="38" ry="16" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <ellipse cx="50" cy="50" rx="16" ry="38" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
@@ -43,7 +51,6 @@ const pillars = [
       "We stay up-to-date with the latest trends and technologies in the IT industry, so you can get the most advanced solutions available.",
     wireframe: (
       <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        {/* Hyperbolic / Cylinder Wireframe Mesh */}
         <ellipse cx="50" cy="20" rx="28" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <ellipse cx="50" cy="80" rx="28" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <ellipse cx="50" cy="50" rx="14" ry="5" stroke="currentColor" strokeWidth="1" opacity="0.6" />
@@ -61,7 +68,6 @@ const pillars = [
       "We take a personalized approach to every project, working closely with you to understand your business and create tailored solutions.",
     wireframe: (
       <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        {/* 3D Curved Surface / Wave Mesh */}
         <path d="M15 40 Q50 20 85 40 Q50 60 15 40" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <path d="M15 55 Q50 35 85 55 Q50 75 15 55" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
         <path d="M15 70 Q50 50 85 70 Q50 90 15 70" stroke="currentColor" strokeWidth="1" opacity="0.6" />
@@ -79,7 +85,6 @@ const pillars = [
       "Our track record speaks for itself – we've helped businesses of all sizes and industries achieve their goals with our IT solutions.",
     wireframe: (
       <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        {/* Torus / Donut Knot 3D Mesh */}
         <ellipse cx="50" cy="50" rx="36" ry="24" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <ellipse cx="50" cy="50" rx="18" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <ellipse cx="50" cy="50" rx="28" ry="34" stroke="currentColor" strokeWidth="0.8" transform="rotate(30 50 50)" opacity="0.6" />
@@ -97,17 +102,77 @@ const stats = [
   { value: "35+", label: "Handled Countries" },
 ]
 
-// Partners / Clients row from reference design
+// 8 Core Values of YaPaze Technologies
+const coreValues = [
+  {
+    icon: Lightbulb,
+    title: "Innovation",
+    desc: "We explore bleeding-edge frameworks and emerging AI tech to deliver future-proof solutions.",
+    color: "from-amber-500 to-yellow-400",
+    accent: "#fbbf24",
+  },
+  {
+    icon: Target,
+    title: "Customer Focus",
+    desc: "We place our clients at the center of every architectural decision to deliver true measurable ROI.",
+    color: "from-violet-500 to-purple-400",
+    accent: "#a78bfa",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Integrity",
+    desc: "Uncompromising transparency, security compliance, and ethical responsibility in all interactions.",
+    color: "from-emerald-500 to-teal-400",
+    accent: "#34d399",
+  },
+  {
+    icon: Zap,
+    title: "Quality Excellence",
+    desc: "High-grade automated testing, precision codebases, and zero-compromise architectural standards.",
+    color: "from-cyan-500 to-blue-400",
+    accent: "#22d3ee",
+  },
+  {
+    icon: Lock,
+    title: "Security First",
+    desc: "Proactive Zero-Trust defense, encrypted pipelines, and impenetrable infrastructure by default.",
+    color: "from-rose-500 to-red-400",
+    accent: "#fb7185",
+  },
+  {
+    icon: RefreshCw,
+    title: "Continuous Improvement",
+    desc: "Rapid agile iterations, ongoing team upskilling, and proactive optimization across all systems.",
+    color: "from-indigo-500 to-sky-400",
+    accent: "#60a5fa",
+  },
+  {
+    icon: HeartHandshake,
+    title: "Collaboration",
+    desc: "Co-engineering shoulder-to-shoulder with our client partners to turn ambitious ideas into reality.",
+    color: "from-fuchsia-500 to-pink-400",
+    accent: "#f472b6",
+  },
+  {
+    icon: Users,
+    title: "Empowerment",
+    desc: "Equipping teams with autonomous knowledge, robust documentation, and tools for long-term growth.",
+    color: "from-purple-500 to-violet-400",
+    accent: "#c084fc",
+  },
+]
+
+// Partner Brands
 const partnerLogos = [
-  { name: "SAMSUNG", icon: "SAMSUNG" },
-  { name: "Google", icon: "Google" },
-  { name: "amazon", icon: "amazon" },
-  { name: "Windows", icon: "Microsoft" },
-  { name: "SONY", icon: "SONY" },
+  { name: "SAMSUNG" },
+  { name: "Google" },
+  { name: "amazon" },
+  { name: "Windows" },
+  { name: "SONY" },
 ]
 
 export default function AboutPage() {
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [activeTab, setActiveTab] = useState<"mission" | "vision">("mission")
 
   return (
     <main className="min-h-screen bg-[#05050d] text-white selection:bg-primary/30 relative overflow-x-clip select-none">
@@ -115,16 +180,13 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 1: TOP HERO (About Us + "We believe that technology can change the world")
+        SECTION 1: HERO (About Us + "We believe that technology can change the world")
         ============================================================
       */}
       <section className="relative pt-32 sm:pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Dark Fluid Wave Curves & Radial Glow */}
         <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-          {/* Top Right Dark Organic Wave */}
           <div className="absolute -top-32 -right-32 w-[600px] sm:w-[900px] h-[500px] sm:h-[700px] bg-gradient-to-bl from-primary/20 via-purple-900/10 to-transparent rounded-full blur-[130px]" />
-          
-          {/* Center Left Subtle Cyan Accent */}
           <div className="absolute top-1/3 -left-40 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[120px]" />
 
           {/* Organic Wave Vector Background Lines */}
@@ -136,18 +198,17 @@ export default function AboutPage() {
           >
             <path
               d="M0 120C320 280 620 40 960 160C1280 280 1440 80 1440 80V0H0V120Z"
-              fill="url(#wave-gradient)"
+              fill="url(#about-wave-grad)"
             />
             <defs>
-              <linearGradient id="wave-gradient" x1="0" y1="0" x2="1440" y2="600" gradientUnits="userSpaceOnUse">
+              <linearGradient id="about-wave-grad" x1="0" y1="0" x2="1440" y2="600" gradientUnits="userSpaceOnUse">
                 <stop stopColor="#8066f7" stopOpacity="0.3" />
                 <stop offset="1" stopColor="#22d3ee" stopOpacity="0.05" />
               </linearGradient>
             </defs>
           </svg>
 
-          {/* 3D Floating Metallic Spheres matching reference design */}
-          {/* Sphere 1: Top Left */}
+          {/* 3D Floating Metallic Spheres */}
           <motion.div
             animate={{ y: [0, -15, 0], x: [0, 8, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -158,7 +219,6 @@ export default function AboutPage() {
             }}
           />
 
-          {/* Sphere 2: Center */}
           <motion.div
             animate={{ y: [0, 18, 0], x: [0, -10, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
@@ -169,7 +229,6 @@ export default function AboutPage() {
             }}
           />
 
-          {/* Torus / Ring: Top Right */}
           <motion.div
             animate={{ rotate: [0, 360], y: [0, -10, 0] }}
             transition={{ rotate: { duration: 20, repeat: Infinity, ease: "linear" }, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
@@ -182,7 +241,7 @@ export default function AboutPage() {
         </div>
 
         <div className="max-w-7xl mx-auto">
-          {/* Breadcrumb: Home • About Us */}
+          {/* Breadcrumb */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -201,14 +260,13 @@ export default function AboutPage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-16 sm:mb-24"
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-14 sm:mb-20"
           >
             About Us
           </motion.h1>
 
-          {/* Main Statement Split Section */}
+          {/* Statement Split Section */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-            {/* Left Column: Bold Headline */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -223,7 +281,6 @@ export default function AboutPage() {
               </h2>
             </motion.div>
 
-            {/* Right Column: Narrative Copy */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -231,10 +288,10 @@ export default function AboutPage() {
               className="lg:col-span-6 space-y-5 text-slate-300 text-sm sm:text-base md:text-lg font-light leading-relaxed"
             >
               <p>
-                That&apos;s why we&apos;re committed to delivering innovative IT solutions to businesses of all sizes. Our team of experienced professionals is dedicated to helping you achieve your goals and thrive in a rapidly evolving digital landscape.
+                At YaPaze Technologies, we are committed to architecting transformative digital ecosystems for forward-thinking enterprises. Our multidisciplinary engineers build resilient software, scalable cloud networks, and impenetrable cybersecurity frameworks designed to give businesses an enduring competitive edge.
               </p>
               <p>
-                We are an elite IT ecosystem that offers a wide range of services to help businesses succeed in the digital world. Our expertise includes web development, mobile development, cloud computing, cybersecurity, and digital marketing. We provide customized solutions to meet the unique needs of each of our clients from every size and nation.
+                From disruptive AI models and enterprise web platforms to mission-critical infrastructure, we transform ambitious goals into high-impact digital realities across global markets.
               </p>
             </motion.div>
           </div>
@@ -244,12 +301,11 @@ export default function AboutPage() {
       {/* 
         ============================================================
         SECTION 2: 4 PILLARS (expertise, technology, solutions, results)
-        Sleek wireframe 3D geometries with YaPaze color theme
         ============================================================
       */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 bg-[#090915]/50 backdrop-blur-xl">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 bg-[#090915]/60 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {pillars.map((pillar, index) => (
               <motion.div
                 key={pillar.title}
@@ -257,20 +313,15 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group p-6 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between"
+                className="group p-6 sm:p-7 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.3)]"
               >
                 <div>
-                  {/* 3D Wireframe Visual */}
                   <div className="mb-6 flex items-center justify-start h-20">
                     {pillar.wireframe}
                   </div>
-
-                  {/* Title (lowercase styled from reference design) */}
-                  <h3 className="text-xl font-extrabold text-white tracking-wide mb-3 group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-xl font-extrabold text-white tracking-wide mb-3 group-hover:text-cyan-400 transition-colors uppercase">
                     {pillar.title}
                   </h3>
-
-                  {/* Description */}
                   <p className="text-sm text-slate-400 font-light leading-relaxed">
                     {pillar.description}
                   </p>
@@ -283,13 +334,14 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 3: FLOATING STATS CARD OVERLAPPING VIDEO/TEAM SHOWCASE
+        SECTION 3: FLOATING STATS OVERLAPPING REDESIGNED IMAGERY
+        Modern High-Tech Engineering Showcase (Replaced old stock photo)
         ============================================================
       */}
       <section className="relative pt-16 sm:pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="max-w-6xl mx-auto relative">
           
-          {/* Floating Pill Stats Card - Positioned overlapping the showcase */}
+          {/* Floating Pill Stats Card */}
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -315,38 +367,51 @@ export default function AboutPage() {
             </div>
           </motion.div>
 
-          {/* Team / Office Video Showcase Card */}
+          {/* Redesigned High-Tech Imagery Showcase: Dual-Layered Interactive Architecture */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 rounded-3xl overflow-hidden border border-white/10 bg-slate-900 shadow-2xl group"
+            className="relative z-10 rounded-3xl overflow-hidden border border-white/10 bg-[#080814] shadow-2xl"
           >
-            {/* Image / Video frame */}
-            <div className="relative h-[340px] sm:h-[480px] md:h-[560px] w-full">
+            {/* Primary Centerpiece Image */}
+            <div className="relative h-[360px] sm:h-[480px] md:h-[580px] w-full overflow-hidden group">
               <Image
-                src="/about.png"
-                alt="YaPaze Technologies Engineering & Solutions Team"
+                src="/bglanding02enhanced.png"
+                alt="YaPaze Technologies Engineering Command Operations"
                 fill
                 priority
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-90"
               />
-              {/* Gradient Dark Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05050d] via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#05050d] via-black/40 to-transparent" />
 
-              {/* Play Button Beacon Overlay matching reference */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.button
-                  whileHover={{ scale: 1.15 }}
-                  whileTap={{ scale: 0.92 }}
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="relative group/btn flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/90 text-[#0c0d18] shadow-[0_0_40px_rgba(255,255,255,0.7)] backdrop-blur-md cursor-pointer transition-all duration-300"
-                  aria-label="Play Video"
-                >
-                  <span className="absolute -inset-2 rounded-full border border-white/40 animate-ping opacity-60" />
-                  <Play className="w-6 h-6 sm:w-8 sm:h-8 fill-current ml-1 text-[#070712]" />
-                </motion.button>
+              {/* Floating Cyber HUD Badges on Top of Image */}
+              <div className="absolute top-16 left-6 sm:top-20 sm:left-10 z-20 flex flex-col gap-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-cyan-400/30 text-xs font-mono text-cyan-300 shadow-lg">
+                  <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                  <span>SYSTEM::CLUSTER_ONLINE (99.98%)</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-purple-400/30 text-xs font-mono text-purple-300 shadow-lg">
+                  <Server className="w-3.5 h-3.5 text-purple-400" />
+                  <span>DISTRIBUTED_CLOUD_ACTIVE</span>
+                </div>
+              </div>
+
+              {/* Secondary Floating Overlapping Card */}
+              <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-20 max-w-xs sm:max-w-sm rounded-2xl bg-black/70 backdrop-blur-xl border border-white/15 p-4 sm:p-5 shadow-2xl hidden min-[480px]:block">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-primary/20 border border-primary/30">
+                    <Cpu className="w-5 h-5 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">Full-Stack Lab</h4>
+                    <p className="text-[11px] font-mono text-slate-400">Enterprise AI & Cloud Scale</p>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                  Continuous integration pipelines engineered for rapid global deployment and zero-downtime execution.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -356,10 +421,180 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 4: PARTNER / CLIENT BRANDS (Samsung, Google, Amazon, Windows, Sony)
+        SECTION 4: CORE VALUES (Added to About Us page as requested)
+        8 Core Values of YaPaze Technologies in High-Tech Glassmorphism
         ============================================================
       */}
-      <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-white/5">
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#070712] border-y border-white/5 overflow-hidden">
+        {/* Ambient Lights */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glassmorphism border border-primary/30 text-xs font-mono font-bold text-primary tracking-widest uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+              <span>OUR FOUNDATION</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              Core Values of <span className="gradient-text">YaPaze Technologies</span>
+            </h2>
+            <p className="text-sm sm:text-base text-slate-400 font-light leading-relaxed">
+              The fundamental principles that govern our engineering philosophy, enterprise partnerships, and digital solutions.
+            </p>
+          </div>
+
+          {/* 8 Core Values Grid with Unique Futuristic Hover Animation */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {coreValues.map((val, idx) => {
+              const Icon = val.icon
+              return (
+                <motion.div
+                  key={val.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.06 }}
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  className="group relative rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] p-6 backdrop-blur-xl transition-all duration-300 overflow-hidden flex flex-col justify-between"
+                  style={{
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  {/* Subtle Top-Right Ambient Glow matching accent */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -top-12 -right-12 w-24 h-24 rounded-full opacity-0 group-hover:opacity-40 blur-xl transition-opacity duration-500"
+                    style={{ background: val.accent }}
+                  />
+
+                  {/* Corner Number Badge */}
+                  <span className="absolute top-4 right-4 font-mono text-xs font-bold text-slate-600 group-hover:text-slate-400 transition-colors">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+
+                  <div>
+                    {/* Icon */}
+                    <div className="mb-4 inline-flex p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300">
+                      <Icon className="w-6 h-6" style={{ color: val.accent }} />
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                      {val.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-slate-400 font-light leading-relaxed">
+                      {val.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500 group-hover:text-slate-400">
+                    <span>STANDARD #{idx + 1}</span>
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: val.accent }} />
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 
+        ============================================================
+        SECTION 5: MISSION & VISION INTERACTIVE STORYTELLING
+        ============================================================
+      */}
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+            {/* Left Interactive Sphere Toggle */}
+            <div
+              className="relative cursor-pointer group shrink-0"
+              onClick={() => setActiveTab(activeTab === "mission" ? "vision" : "mission")}
+            >
+              <div className="absolute inset-0 bg-primary/25 rounded-full blur-[80px] group-hover:bg-cyan-500/30 transition-all duration-500" />
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-black via-[#0a0a28] to-[#12123e] flex flex-col items-center justify-center p-8 border border-white/15 shadow-[0_0_60px_rgba(128,102,247,0.3)]"
+              >
+                <div className="text-center space-y-2 pointer-events-none">
+                  <span className="text-xs font-mono tracking-widest text-primary uppercase">CLICK TO TOGGLE</span>
+                  <div className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
+                    {activeTab === "mission" ? "Mission" : "Vision"}
+                  </div>
+                  <p className="text-[11px] text-slate-400 max-w-[180px] mx-auto">
+                    {activeTab === "mission" ? "Switch to our future Vision →" : "Switch to our core Mission →"}
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Narrative Content */}
+            <div className="flex-1 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glassmorphism border border-primary/30 text-xs font-mono font-bold text-primary tracking-widest uppercase">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span>STRATEGIC MANDATE</span>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-5"
+                >
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                    {activeTab === "mission" ? (
+                      <>
+                        Empowering global enterprises through{" "}
+                        <span className="gradient-text">accessible & advanced intelligence.</span>
+                      </>
+                    ) : (
+                      <>
+                        Becoming the world&apos;s most trusted{" "}
+                        <span className="gradient-text">partner for next-gen IT solutions.</span>
+                      </>
+                    )}
+                  </h3>
+
+                  <p className="text-slate-300 text-base sm:text-lg font-light leading-relaxed">
+                    {activeTab === "mission"
+                      ? "We work relentlessly to ensure cutting-edge software engineering, autonomous systems, and scalable cloud networks are seamlessly accessible to solve real business challenges, dismantle technical barriers, and unlock exponential growth."
+                      : "To lead the frontier of digital transformation by setting the benchmark for security, speed, and continuous technological innovation—empowering clients worldwide to stay perpetually ahead of change."}
+                  </p>
+
+                  <div className="pt-3 flex flex-wrap gap-3">
+                    {(activeTab === "mission"
+                      ? ["Ethical AI", "Decentralized Systems", "Enterprise Agility"]
+                      : ["Global Reach", "Zero-Downtime Architecture", "Client Excellence"]
+                    ).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 font-mono text-xs text-slate-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 
+        ============================================================
+        SECTION 6: PARTNERS ROW
+        ============================================================
+      */}
+      <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-y border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center justify-around gap-8 sm:gap-12 opacity-65 hover:opacity-100 transition-opacity duration-300">
             {partnerLogos.map((brand) => (
@@ -376,16 +611,13 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 5: BOTTOM CTA (Need IT Solutions? Let's start now.)
+        SECTION 7: BOTTOM CTA
         ============================================================
       */}
       <section className="relative py-24 sm:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
-        {/* Background Waves & Floating Spheres */}
         <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-          {/* Subtle Ambient Radial Glow */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[350px] bg-primary/15 rounded-full blur-[140px]" />
 
-          {/* Flowing Wave Wireframe Lines */}
           <svg
             className="absolute bottom-0 left-0 w-full h-[320px] opacity-20"
             viewBox="0 0 1440 320"
@@ -405,7 +637,6 @@ export default function AboutPage() {
             />
           </svg>
 
-          {/* Floating Spheres */}
           <motion.div
             animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
@@ -461,7 +692,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Global Footer & Scroll Aid */}
       <Footer />
       <ScrollToTop />
     </main>

@@ -5,10 +5,6 @@ import { motion } from "framer-motion"
 import {
   ArrowRight,
   Check,
-  Code2,
-  PenTool,
-  Rocket,
-  Search,
   Lightbulb,
   Target,
   Shield,
@@ -19,13 +15,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { services } from "@/lib/services-data"
-
-const process = [
-  { icon: Search, title: "Discover", desc: "We learn your goals, users and constraints before writing a single line." },
-  { icon: PenTool, title: "Design", desc: "Clear architecture and interfaces you can review and approve early." },
-  { icon: Code2, title: "Build", desc: "Iterative delivery with regular demos, testing and security built in." },
-  { icon: Rocket, title: "Launch & Support", desc: "Smooth go-live, monitoring and ongoing improvement." },
-]
+import { ProcessSection } from "@/components/process-section"
 
 const values = [
   {
@@ -255,7 +245,7 @@ export function ServicesSection() {
                     </div>
 
                     {/* Card Footer: CTA */}
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 border-t border-white/10 pt-4">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 sm:gap-4 border-t border-white/10 pt-4">
                       <Link
                         href={service.cta.href}
                         className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#8066f7] px-6 py-2.5 text-xs sm:text-sm font-bold text-white transition-all duration-300 hover:bg-[#6b51e2] hover:shadow-[0_0_25px_rgba(128,102,247,0.5)] text-center"
@@ -263,11 +253,6 @@ export function ServicesSection() {
                         <span>{service.cta.label}</span>
                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Link>
-
-                      <span className="text-xs font-mono text-slate-400 flex items-center justify-center sm:justify-end gap-2">
-                        <span>{isLast ? "All Services Explored" : "Scroll to stack next service"}</span>
-                        <span className={`h-1.5 w-1.5 rounded-full ${isLast ? "bg-emerald-400" : "bg-cyan-400 animate-pulse"}`} />
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -277,47 +262,8 @@ export function ServicesSection() {
         </div>
       </div>
 
-      {/* How we work (Normal scroll continues smoothly here) */}
-      <div className="relative z-10 px-4 pb-20 sm:pb-24 sm:px-6 lg:px-8 pt-12 sm:pt-16 border-t border-white/5">
-        <div className="mx-auto max-w-7xl">
-          <motion.div
-            className="mb-8 sm:mb-12 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="mb-2 sm:mb-3 font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-primary">How we work</p>
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-              One process. <span className="gradient-text">Every service.</span>
-            </h3>
-          </motion.div>
-          <ol className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {process.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <motion.li
-                  key={step.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
-                >
-                  <span className="absolute right-4 top-3 sm:right-5 sm:top-4 font-mono text-3xl sm:text-4xl font-extrabold text-white/[0.06]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div className="mb-3 sm:mb-4 grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-xl bg-primary/15 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h4 className="mb-1.5 sm:mb-2 text-base sm:text-lg font-bold text-white">{step.title}</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed text-slate-400">{step.desc}</p>
-                </motion.li>
-              )
-            })}
-          </ol>
-        </div>
-      </div>
+      {/* How we work / Our Process with Unique Shapes & Animations */}
+      <ProcessSection />
 
       {/* Core Values */}
       <div className="relative z-10 px-4 pb-16 sm:px-6 lg:px-8">
