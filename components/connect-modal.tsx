@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ChevronDown, Send } from "lucide-react"
 
@@ -20,6 +21,7 @@ const servicesList = [
 ]
 
 export function ConnectModal({ isOpen, onClose }: ConnectModalProps) {
+  const [mounted, setMounted] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,20 +31,41 @@ export function ConnectModal({ isOpen, onClose }: ConnectModalProps) {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Close on Escape key and lock body scroll
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Close on Escape key, lock body scroll & blur background content including navbar
   useEffect(() => {
     if (!isOpen) return
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    const mainEl = document.querySelector("main")
+    const navContainers = document.querySelectorAll(".fixed.top-4, nav, header")
+
+    if (mainEl) {
+      mainEl.style.filter = "blur(10px)"
+      mainEl.style.transition = "filter 0.3s ease"
+    }
+
+    navContainers.forEach((el) => {
+      ;(el as HTMLElement).style.filter = "blur(10px)"
+      ;(el as HTMLElement).style.transition = "filter 0.3s ease"
+    })
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
-
-    const originalOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
     window.addEventListener("keydown", handleKeyDown)
 
     return () => {
-      document.body.style.overflow = originalOverflow
+      document.body.style.overflow = prevOverflow
+      if (mainEl) mainEl.style.filter = ""
+      navContainers.forEach((el) => {
+        ;(el as HTMLElement).style.filter = ""
+      })
       window.removeEventListener("keydown", handleKeyDown)
     }
   }, [isOpen, onClose])
@@ -86,17 +109,19 @@ export function ConnectModal({ isOpen, onClose }: ConnectModalProps) {
     onClose()
   }
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6">
+          {/* Backdrop with heavy blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 bg-black/85 backdrop-blur-2xl"
             onClick={onClose}
           />
 
@@ -216,6 +241,7 @@ export function ConnectModal({ isOpen, onClose }: ConnectModalProps) {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }

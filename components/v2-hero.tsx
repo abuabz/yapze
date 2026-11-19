@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
 import { Shield, Cpu, ArrowRight, Activity, Sparkles, Terminal } from "lucide-react"
 import { ClientsMarquee } from "@/components/clients-marquee"
+import { AiChatbotAnimation } from "@/components/ai-chatbot-animation"
 
 const words = [
   "AI-Driven Transformation",
@@ -101,7 +102,7 @@ export function V2Hero() {
 
 
       {/* Main Grid Container with Scroll Parallax */}
-      <div className="max-w-5xl mx-auto w-full grid grid-cols-1 gap-8 lg:gap-12 items-center z-10 px-4 sm:px-6 lg:px-8 my-auto">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center z-10 px-4 sm:px-6 lg:px-8 my-auto">
 
         {/* Left Side Content with Scroll Parallax */}
         <motion.div
@@ -109,7 +110,7 @@ export function V2Hero() {
             y: yContent,
             opacity: opacityContent,
           }}
-          className="w-full text-left space-y-6 sm:space-y-8"
+          className="lg:col-span-7 w-full text-left space-y-6 sm:space-y-8"
         >
           {/* Welcome Badge */}
           <motion.div
@@ -236,6 +237,20 @@ export function V2Hero() {
               </div>
             ))}
           </motion.div>
+        </motion.div>
+
+        {/* Right Side: AI Chatbot Animation Showcase */}
+        <motion.div
+          style={{
+            y: yContent,
+            opacity: opacityContent,
+          }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="lg:col-span-5 w-full flex items-center justify-center lg:justify-end"
+        >
+          <AiChatbotAnimation />
         </motion.div>
 
       </div>

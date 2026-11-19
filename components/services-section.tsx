@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import { services } from "@/lib/services-data"
 import { ProcessSection } from "@/components/process-section"
+import { ItHelpCta } from "@/components/it-help-cta"
 
 const values = [
   {
@@ -259,6 +260,13 @@ export function ServicesSection() {
               </div>
             )
           })}
+        </div>
+      </div>
+
+      {/* IT Help CTA Banner (Directly below services) */}
+      <div className="relative z-10 px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <ItHelpCta />
         </div>
       </div>
 
