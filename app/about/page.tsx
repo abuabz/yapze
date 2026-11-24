@@ -8,6 +8,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { SupportRequestModal } from "@/components/support-request-modal"
+import { ClientsMarquee } from "@/components/clients-marquee"
 import {
   ArrowRight,
   Sparkles,
@@ -173,15 +174,6 @@ const coreValues = [
     accent: "#c084fc",
     tag: "Shared Success",
   },
-]
-
-// Partner Brands
-const partnerLogos = [
-  { name: "SAMSUNG" },
-  { name: "Google" },
-  { name: "amazon" },
-  { name: "Windows" },
-  { name: "SONY" },
 ]
 
 export default function AboutPage() {
@@ -669,23 +661,17 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 6: PARTNERS ROW
-        Clean, standard enterprise client strip
+        SECTION 6: TECHNOLOGY PARTNERS & ECOSYSTEM MARQUEE
+        Infinite dynamic marquee with official brand logos
         ============================================================
       */}
-      <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-y border-white/10 bg-gradient-to-r from-transparent via-[#0c0824]/60 to-transparent">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap items-center justify-around gap-8 sm:gap-12 opacity-70 hover:opacity-100 transition-opacity duration-300">
-            {partnerLogos.map((brand) => (
-              <span
-                key={brand.name}
-                className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-widest text-slate-300 hover:text-white transition-colors cursor-default select-none uppercase font-mono"
-              >
-                {brand.name}
-              </span>
-            ))}
+      <section className="relative py-10 sm:py-14 border-y border-white/10 bg-gradient-to-r from-transparent via-[#0c0824]/60 to-transparent overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 sm:mb-6 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-semibold text-primary tracking-widest uppercase">
+            <span>ENTERPRISE ECOSYSTEM & SUPPORTED PLATFORMS</span>
           </div>
         </div>
+        <ClientsMarquee />
       </section>
 
       {/* 
