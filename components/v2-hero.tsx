@@ -102,26 +102,17 @@ export function V2Hero() {
 
 
       {/* Main Grid Container with Scroll Parallax */}
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center z-10 px-4 sm:px-6 lg:px-8 my-auto">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 lg:gap-14 items-center z-10 px-4 sm:px-6 lg:px-8 my-auto">
 
-        {/* Left Side Content with Scroll Parallax */}
+        {/* Left Side Content with Scroll Parallax - order-2 on mobile so animation appears on top */}
         <motion.div
           style={{
             y: yContent,
             opacity: opacityContent,
           }}
-          className="lg:col-span-7 w-full text-left space-y-6 sm:space-y-8"
+          className="order-2 lg:order-1 lg:col-span-7 w-full text-left space-y-5 sm:space-y-8"
         >
-          {/* Welcome Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glassmorphism border border-primary/20 text-[11px] sm:text-xs font-semibold text-primary tracking-wider"
-          >
-            <Activity className="w-3.5 h-3.5 text-primary animate-ping" />
-            <span>WELCOME TO THE FUTURE OF IT</span>
-          </motion.div>
+
 
           <div className="space-y-3 sm:space-y-4">
             <motion.h1
@@ -186,11 +177,6 @@ export function V2Hero() {
                 className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
               />
 
-              {/* Live Status Beacon Dot */}
-              <span className="relative z-10 flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-80" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-              </span>
 
               <span className="relative z-10 tracking-wide font-semibold sm:font-bold whitespace-nowrap">
                 Get in Touch
@@ -239,7 +225,7 @@ export function V2Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Right Side: AI Chatbot Animation Showcase */}
+        {/* AI Chatbot Animation Showcase - order-1 on mobile to appear at the top, right side on desktop */}
         <motion.div
           style={{
             y: yContent,
@@ -247,8 +233,8 @@ export function V2Hero() {
           }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.35 }}
-          className="lg:col-span-5 w-full flex items-center justify-center lg:justify-end"
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="order-1 lg:order-2 lg:col-span-5 w-full flex items-center justify-center lg:justify-end -my-2 sm:my-0"
         >
           <AiChatbotAnimation />
         </motion.div>

@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { SupportRequestModal } from "@/components/support-request-modal"
 import {
   ArrowRight,
   Sparkles,
@@ -22,40 +23,48 @@ import {
   Cpu,
   Layers,
   Activity,
-  Terminal,
   Server,
   Lock,
+  Globe,
+  Award,
+  MessageCircle,
+  FileText,
+  CheckCircle2,
 } from "lucide-react"
 
-// 4 Core Pillars with 3D Wireframe Geometries
+// 4 Foundational Pillars with Clean High-Tech Geometric Wireframe Visuals
 const pillars = [
   {
-    title: "expertise",
+    number: "01",
+    title: "Expertise",
+    subtitle: "Domain Mastery & Engineering Prowess",
     description:
-      "Our team of experienced experts have the knowledge and expertise to deliver innovative IT solutions that meet your unique needs.",
+      "Our seasoned software architects, cloud engineers, and security specialists deliver robust, tailor-made digital systems engineered to satisfy your exact organizational requirements.",
     wireframe: (
-      <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-        <ellipse cx="50" cy="50" rx="38" ry="16" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
-        <ellipse cx="50" cy="50" rx="16" ry="38" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
+      <svg className="w-14 h-14 text-primary group-hover:text-cyan-400 group-hover:scale-110 transition-all duration-500" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.4" />
+        <ellipse cx="50" cy="50" rx="38" ry="16" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+        <ellipse cx="50" cy="50" rx="16" ry="38" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
         <ellipse cx="50" cy="50" rx="28" ry="28" stroke="currentColor" strokeWidth="0.8" opacity="0.5" />
-        <ellipse cx="50" cy="50" rx="38" ry="26" stroke="currentColor" strokeWidth="1" transform="rotate(45 50 50)" opacity="0.7" />
-        <ellipse cx="50" cy="50" rx="38" ry="26" stroke="currentColor" strokeWidth="1" transform="rotate(-45 50 50)" opacity="0.7" />
-        <circle cx="50" cy="50" r="4" fill="currentColor" opacity="0.9" />
+        <ellipse cx="50" cy="50" rx="38" ry="26" stroke="currentColor" strokeWidth="1.2" transform="rotate(45 50 50)" opacity="0.75" />
+        <ellipse cx="50" cy="50" rx="38" ry="26" stroke="currentColor" strokeWidth="1.2" transform="rotate(-45 50 50)" opacity="0.75" />
+        <circle cx="50" cy="50" r="4.5" fill="currentColor" opacity="0.95" />
       </svg>
     ),
   },
   {
-    title: "technology",
+    number: "02",
+    title: "Technology",
+    subtitle: "Modern Stacks & Future-Proof Tools",
     description:
-      "We stay up-to-date with the latest trends and technologies in the IT industry, so you can get the most advanced solutions available.",
+      "We pioneer modern frameworks, intelligent AI algorithms, and cloud-native microservices so your business always operates on the most modern, agile technology stack available.",
     wireframe: (
-      <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        <ellipse cx="50" cy="20" rx="28" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
-        <ellipse cx="50" cy="80" rx="28" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
+      <svg className="w-14 h-14 text-primary group-hover:text-cyan-400 group-hover:scale-110 transition-all duration-500" viewBox="0 0 100 100" fill="none">
+        <ellipse cx="50" cy="20" rx="28" ry="10" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+        <ellipse cx="50" cy="80" rx="28" ry="10" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
         <ellipse cx="50" cy="50" rx="14" ry="5" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-        <path d="M22 20 Q50 50 22 80" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
-        <path d="M78 20 Q50 50 78 80" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
+        <path d="M22 20 Q50 50 22 80" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+        <path d="M78 20 Q50 50 78 80" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
         <path d="M36 20 Q50 50 36 80" stroke="currentColor" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
         <path d="M64 20 Q50 50 64 80" stroke="currentColor" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.5" />
         <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="0.8" opacity="0.4" />
@@ -63,30 +72,34 @@ const pillars = [
     ),
   },
   {
-    title: "solutions",
+    number: "03",
+    title: "Solutions",
+    subtitle: "Tailored Architecture & Bespoke Delivery",
     description:
-      "We take a personalized approach to every project, working closely with you to understand your business and create tailored solutions.",
+      "We reject one-size-fits-all templates. Every system is conceived, designed, and optimized collaboratively to address your precise operational workflows and commercial ambitions.",
     wireframe: (
-      <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        <path d="M15 40 Q50 20 85 40 Q50 60 15 40" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
-        <path d="M15 55 Q50 35 85 55 Q50 75 15 55" stroke="currentColor" strokeWidth="1.2" opacity="0.7" />
-        <path d="M15 70 Q50 50 85 70 Q50 90 15 70" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+      <svg className="w-14 h-14 text-primary group-hover:text-cyan-400 group-hover:scale-110 transition-all duration-500" viewBox="0 0 100 100" fill="none">
+        <path d="M15 40 Q50 20 85 40 Q50 60 15 40" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+        <path d="M15 55 Q50 35 85 55 Q50 75 15 55" stroke="currentColor" strokeWidth="1.4" opacity="0.75" />
+        <path d="M15 70 Q50 50 85 70 Q50 90 15 70" stroke="currentColor" strokeWidth="1.2" opacity="0.65" />
         <line x1="25" y1="36" x2="25" y2="73" stroke="currentColor" strokeWidth="0.8" opacity="0.5" />
         <line x1="38" y1="31" x2="38" y2="76" stroke="currentColor" strokeWidth="0.8" opacity="0.5" />
-        <line x1="50" y1="29" x2="50" y2="77" stroke="currentColor" strokeWidth="1" opacity="0.7" />
+        <line x1="50" y1="29" x2="50" y2="77" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
         <line x1="62" y1="31" x2="62" y2="76" stroke="currentColor" strokeWidth="0.8" opacity="0.5" />
         <line x1="75" y1="36" x2="75" y2="73" stroke="currentColor" strokeWidth="0.8" opacity="0.5" />
       </svg>
     ),
   },
   {
-    title: "results",
+    number: "04",
+    title: "Results",
+    subtitle: "Measurable Impact & Proven Reliability",
     description:
-      "Our track record speaks for itself – we've helped businesses of all sizes and industries achieve their goals with our IT solutions.",
+      "Our pedigree speaks through outcomes: accelerating system performance, eliminating vulnerabilities, and delivering measurable commercial ROI for global enterprises.",
     wireframe: (
-      <svg className="w-16 h-16 text-primary group-hover:scale-110 group-hover:text-cyan-400 transition-all duration-500" viewBox="0 0 100 100" fill="none">
-        <ellipse cx="50" cy="50" rx="36" ry="24" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
-        <ellipse cx="50" cy="50" rx="18" ry="10" stroke="currentColor" strokeWidth="1.2" opacity="0.8" />
+      <svg className="w-14 h-14 text-primary group-hover:text-cyan-400 group-hover:scale-110 transition-all duration-500" viewBox="0 0 100 100" fill="none">
+        <ellipse cx="50" cy="50" rx="36" ry="24" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
+        <ellipse cx="50" cy="50" rx="18" ry="10" stroke="currentColor" strokeWidth="1.4" opacity="0.85" />
         <ellipse cx="50" cy="50" rx="28" ry="34" stroke="currentColor" strokeWidth="0.8" transform="rotate(30 50 50)" opacity="0.6" />
         <ellipse cx="50" cy="50" rx="28" ry="34" stroke="currentColor" strokeWidth="0.8" transform="rotate(-30 50 50)" opacity="0.6" />
         <circle cx="50" cy="50" r="28" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.4" />
@@ -97,9 +110,9 @@ const pillars = [
 
 // Stats
 const stats = [
-  { value: "500+", label: "Successful Projects" },
-  { value: "98%", label: "Satisfied Clients" },
-  { value: "35+", label: "Handled Countries" },
+  { value: "99.9%", label: "System Uptime", icon: Activity },
+  { value: "150+", label: "Completed Projects", icon: Cpu },
+  { value: "100%", label: "Secure Protocols", icon: Shield },
 ]
 
 // 8 Core Values of YaPaze Technologies
@@ -107,58 +120,58 @@ const coreValues = [
   {
     icon: Lightbulb,
     title: "Innovation",
-    desc: "We explore bleeding-edge frameworks and emerging AI tech to deliver future-proof solutions.",
-    color: "from-amber-500 to-yellow-400",
+    desc: "We explore bleeding-edge frameworks, serverless paradigms, and AI to deliver future-proof solutions.",
     accent: "#fbbf24",
+    tag: "Pioneering Tech",
   },
   {
     icon: Target,
     title: "Customer Focus",
-    desc: "We place our clients at the center of every architectural decision to deliver true measurable ROI.",
-    color: "from-violet-500 to-purple-400",
+    desc: "We place clients at the heart of every architecture decision to deliver true measurable business ROI.",
     accent: "#a78bfa",
+    tag: "Value-Driven",
   },
   {
     icon: ShieldCheck,
     title: "Integrity",
-    desc: "Uncompromising transparency, security compliance, and ethical responsibility in all interactions.",
-    color: "from-emerald-500 to-teal-400",
+    desc: "Uncompromising transparency, security compliance, and ethical responsibility in every interaction.",
     accent: "#34d399",
+    tag: "High Trust",
   },
   {
     icon: Zap,
     title: "Quality Excellence",
     desc: "High-grade automated testing, precision codebases, and zero-compromise architectural standards.",
-    color: "from-cyan-500 to-blue-400",
     accent: "#22d3ee",
+    tag: "Precision Code",
   },
   {
     icon: Lock,
     title: "Security First",
     desc: "Proactive Zero-Trust defense, encrypted pipelines, and impenetrable infrastructure by default.",
-    color: "from-rose-500 to-red-400",
     accent: "#fb7185",
+    tag: "Zero-Trust",
   },
   {
     icon: RefreshCw,
-    title: "Continuous Improvement",
+    title: "Continuous Growth",
     desc: "Rapid agile iterations, ongoing team upskilling, and proactive optimization across all systems.",
-    color: "from-indigo-500 to-sky-400",
     accent: "#60a5fa",
+    tag: "Agile Evolution",
   },
   {
     icon: HeartHandshake,
     title: "Collaboration",
     desc: "Co-engineering shoulder-to-shoulder with our client partners to turn ambitious ideas into reality.",
-    color: "from-fuchsia-500 to-pink-400",
     accent: "#f472b6",
+    tag: "True Partnership",
   },
   {
     icon: Users,
     title: "Empowerment",
     desc: "Equipping teams with autonomous knowledge, robust documentation, and tools for long-term growth.",
-    color: "from-purple-500 to-violet-400",
     accent: "#c084fc",
+    tag: "Shared Success",
   },
 ]
 
@@ -173,86 +186,66 @@ const partnerLogos = [
 
 export default function AboutPage() {
   const [activeTab, setActiveTab] = useState<"mission" | "vision">("mission")
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false)
 
   return (
-    <main className="min-h-screen bg-[#05050d] text-white selection:bg-primary/30 relative overflow-x-clip select-none">
+    <main className="min-h-screen bg-[#070514] text-white selection:bg-primary/30 relative overflow-x-clip select-none">
       <Navbar />
 
       {/* 
         ============================================================
-        SECTION 1: HERO (About Us + "We believe that technology can change the world")
+        GLOBAL RICH GRADIENT BACKGROUND LAYERS
+        Not over simple: Multi-layered mesh gradients, luminous orbs, and subtle tech matrix dots
         ============================================================
       */}
-      <section className="relative pt-32 sm:pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background Dark Fluid Wave Curves & Radial Glow */}
-        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-          <div className="absolute -top-32 -right-32 w-[600px] sm:w-[900px] h-[500px] sm:h-[700px] bg-gradient-to-bl from-primary/20 via-purple-900/10 to-transparent rounded-full blur-[130px]" />
-          <div className="absolute top-1/3 -left-40 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[120px]" />
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        {/* Base cosmic gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0b0824] via-[#070516] to-[#04030d]" />
 
-          {/* Organic Wave Vector Background Lines */}
-          <svg
-            className="absolute top-0 right-0 w-full h-[600px] opacity-15"
-            viewBox="0 0 1440 600"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 120C320 280 620 40 960 160C1280 280 1440 80 1440 80V0H0V120Z"
-              fill="url(#about-wave-grad)"
-            />
-            <defs>
-              <linearGradient id="about-wave-grad" x1="0" y1="0" x2="1440" y2="600" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#8066f7" stopOpacity="0.3" />
-                <stop offset="1" stopColor="#22d3ee" stopOpacity="0.05" />
-              </linearGradient>
-            </defs>
-          </svg>
+        {/* Top-Center Grand Aurora Violet Radial Glow */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] sm:w-[1300px] h-[650px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#8066f7]/30 via-indigo-900/15 to-transparent blur-[140px]" />
 
-          {/* 3D Floating Metallic Spheres */}
-          <motion.div
-            animate={{ y: [0, -15, 0], x: [0, 8, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-44 left-[10%] w-7 h-7 sm:w-9 sm:h-9 rounded-full shadow-2xl pointer-events-none"
-            style={{
-              background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #cbd5e1 30%, #475569 70%, #0f172a 100%)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.8)",
-            }}
-          />
+        {/* Left Side Electric Cyan Ambient Beam */}
+        <div className="absolute top-[35%] -left-48 w-[600px] h-[600px] bg-cyan-500/15 rounded-full blur-[150px]" />
 
-          <motion.div
-            animate={{ y: [0, 18, 0], x: [0, -10, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-28 left-[45%] w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-2xl pointer-events-none"
-            style={{
-              background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #cbd5e1 30%, #475569 70%, #0f172a 100%)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.8)",
-            }}
-          />
+        {/* Right Side Deep Magenta / Purple Ambient Glow */}
+        <div className="absolute top-[55%] -right-48 w-[650px] h-[650px] bg-purple-600/15 rounded-full blur-[160px]" />
 
-          <motion.div
-            animate={{ rotate: [0, 360], y: [0, -10, 0] }}
-            transition={{ rotate: { duration: 20, repeat: Infinity, ease: "linear" }, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-            className="absolute top-36 right-[12%] w-12 h-12 sm:w-16 sm:h-16 rounded-full border-4 border-slate-300/40 shadow-2xl pointer-events-none"
-            style={{
-              background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 70%)",
-              boxShadow: "0 15px 35px rgba(0,0,0,0.9), inset 0 2px 5px rgba(255,255,255,0.6)",
-            }}
-          />
-        </div>
+        {/* Bottom Ambient Glow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-t from-[#8066f7]/20 via-cyan-500/10 to-transparent blur-[140px]" />
 
+        {/* Cyber Tech Dot-Matrix Pattern Overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(128,102,247,0.14)_1px,transparent_1px)] [background-size:32px_32px] opacity-40" />
+
+        {/* Subtle Cyber Grid Lines Masked at Top and Bottom */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(128,102,247,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(128,102,247,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_40%,#000_60%,transparent_100%)] opacity-60" />
+      </div>
+
+      {/* 
+        ============================================================
+        SECTION 1: HERO (About Us & Vision Statement)
+        Neat, standard, beautifully proportioned layout
+        ============================================================
+      */}
+      <section className="relative pt-32 sm:pt-40 lg:pt-44 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Breadcrumb */}
+          {/* Breadcrumb & Pill Badge */}
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center gap-2 text-xs sm:text-sm font-mono text-slate-400 mb-4"
+            className="flex flex-wrap items-center gap-3 mb-6"
           >
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-            <span className="text-white font-medium">About Us</span>
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-slate-400 bg-white/[0.03] border border-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
+              <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+              <span className="text-white font-medium">About Us</span>
+            </div>
+
+
           </motion.div>
 
           {/* Big Title: About Us */}
@@ -260,39 +253,60 @@ export default function AboutPage() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-14 sm:mb-20"
+            className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-10 sm:mb-16"
           >
-            About Us
+            About <span className="bg-gradient-to-r from-white via-primary to-cyan-400 bg-clip-text text-transparent">Us</span>
           </motion.h1>
 
-          {/* Statement Split Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Statement Split Section: Standard & Neat 2-Column Split */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center rounded-3xl bg-gradient-to-br from-white/[0.05] via-[#0d0a27]/60 to-white/[0.02] border border-white/10 p-6 sm:p-10 lg:p-12 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+            {/* Left Headline */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="lg:col-span-6"
+              className="lg:col-span-6 space-y-4"
             >
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 tracking-wider uppercase font-semibold">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
+                Our Driving Belief
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.2]">
                 We believe that{" "}
-                <span className="bg-gradient-to-r from-white via-primary to-cyan-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary via-purple-300 to-cyan-400 bg-clip-text text-transparent">
                   technology can change the world.
                 </span>
               </h2>
+              <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed pt-1">
+                At YaPaze Technologies, innovation isn&apos;t just what we build—it is how we think. We engineer digital solutions that elevate businesses into resilient, market-defining leaders.
+              </p>
             </motion.div>
 
+            {/* Right Narrative Paragraphs */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="lg:col-span-6 space-y-5 text-slate-300 text-sm sm:text-base md:text-lg font-light leading-relaxed"
+              className="lg:col-span-6 space-y-4 text-slate-300 text-sm sm:text-base font-light leading-relaxed lg:border-l lg:border-white/10 lg:pl-10"
             >
               <p>
-                At YaPaze Technologies, we are committed to architecting transformative digital ecosystems for forward-thinking enterprises. Our multidisciplinary engineers build resilient software, scalable cloud networks, and impenetrable cybersecurity frameworks designed to give businesses an enduring competitive edge.
+                We are a full-spectrum technological ecosystem delivering mission-critical IT solutions to enterprises worldwide. From high-performance cloud networks and impenetrable cybersecurity to custom ERPs and intelligent AI tools, we tailor every architecture to our clients&apos; vision.
               </p>
               <p>
-                From disruptive AI models and enterprise web platforms to mission-critical infrastructure, we transform ambitious goals into high-impact digital realities across global markets.
+                By combining elite engineering standards with a client-first philosophy, we ensure companies of all sizes move faster, scale smoothly, and maintain total digital sovereignty in a rapidly transforming world.
               </p>
+
+              {/* Quick Trust Highlights */}
+              <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-mono text-slate-300">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
+                  Remote Worldwide Delivery
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                  Enterprise Zero-Downtime
+                </span>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -300,31 +314,69 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 2: 4 PILLARS (expertise, technology, solutions, results)
+        SECTION 2: 4 PILLARS (Expertise, Technology, Solutions, Results)
+        Standard & Neat 4-column card grid with rich gradient backgrounds
         ============================================================
       */}
-      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 bg-[#090915]/60 backdrop-blur-xl">
+      <section className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/10 bg-gradient-to-b from-[#0d0928]/70 via-[#09071c]/80 to-[#060515]/90 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-semibold text-primary tracking-widest uppercase">
+              <span>OUR FOUNDATION</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              The Four Pillars of <span className="gradient-text">YaPaze</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 font-light">
+              Architectural principles that ensure every project achieves production-grade excellence.
+            </p>
+          </div>
+
+          {/* 4 Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
             {pillars.map((pillar, index) => (
               <motion.div
                 key={pillar.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group p-6 sm:p-7 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_25px_rgba(0,0,0,0.3)]"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="group relative p-6 sm:p-7 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white/[0.04] via-white/[0.02] to-transparent border border-white/10 hover:border-primary/50 transition-all duration-300 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:shadow-[0_15px_40px_rgba(128,102,247,0.2)] overflow-hidden"
               >
+                {/* Top Subtle Hover Accent Bar */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                 <div>
-                  <div className="mb-6 flex items-center justify-start h-20">
-                    {pillar.wireframe}
+                  {/* Top Wireframe Graphic Container */}
+                  <div className="mb-6 flex items-center justify-between">
+                    <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 group-hover:border-primary/30 group-hover:bg-primary/10 transition-all duration-300">
+                      {pillar.wireframe}
+                    </div>
+                    <span className="font-mono text-sm font-bold text-slate-500 group-hover:text-primary transition-colors">
+                      {pillar.number}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-extrabold text-white tracking-wide mb-3 group-hover:text-cyan-400 transition-colors uppercase">
+
+                  {/* Title & Subtitle */}
+                  <h3 className="text-xl font-bold text-white tracking-tight mb-1 group-hover:text-cyan-300 transition-colors uppercase">
                     {pillar.title}
                   </h3>
-                  <p className="text-sm text-slate-400 font-light leading-relaxed">
+                  <p className="text-xs font-mono text-primary/80 mb-3">
+                    {pillar.subtitle}
+                  </p>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-slate-400 font-light leading-relaxed">
                     {pillar.description}
                   </p>
+                </div>
+
+                {/* Bottom Status Indicator */}
+                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500 group-hover:text-slate-300">
+                  <span>STANDARD VERIFIED</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:bg-cyan-400 transition-colors" />
                 </div>
               </motion.div>
             ))}
@@ -334,110 +386,109 @@ export default function AboutPage() {
 
       {/* 
         ============================================================
-        SECTION 3: FLOATING STATS OVERLAPPING REDESIGNED IMAGERY
-        Modern High-Tech Engineering Showcase (Replaced old stock photo)
+        SECTION 3: STATS OVERLAPPING ENGINEERING SHOWCASE
+        Neat, elevated floating stats bar with high-res workspace image
         ============================================================
       */}
-      <section className="relative pt-16 sm:pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-16 sm:pt-24 pb-20 sm:pb-28 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto relative">
-          
           {/* Floating Pill Stats Card */}
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            initial={{ opacity: 0, y: -20, scale: 0.96 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative z-20 max-w-4xl mx-auto -mb-10 sm:-mb-14 rounded-2xl sm:rounded-3xl bg-[#090918]/95 backdrop-blur-2xl border border-white/15 p-6 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.95)]"
-            style={{
-              borderColor: "rgba(128, 102, 247, 0.4)",
-              boxShadow: "0 25px 80px -10px rgba(128, 102, 247, 0.25), 0 10px 40px rgba(0,0,0,0.9)",
-            }}
+            className="relative z-20 max-w-4xl mx-auto -mb-12 sm:-mb-16 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0e0a29]/95 via-[#0c0824]/95 to-[#0a071f]/95 backdrop-blur-2xl border border-primary/40 p-6 sm:p-9 shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_50px_rgba(128,102,247,0.25)]"
           >
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10 text-center">
-              {stats.map((stat, i) => (
-                <div key={stat.label} className={`${i > 0 ? "pt-4 sm:pt-0 sm:px-6" : "sm:pr-6"}`}>
-                  <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight bg-gradient-to-r from-cyan-400 via-[#8066f7] to-fuchsia-400 bg-clip-text text-transparent">
-                    {stat.value}
+              {stats.map((stat, i) => {
+                const Icon = stat.icon
+                return (
+                  <div key={stat.label} className={`${i > 0 ? "pt-4 sm:pt-0 sm:px-6" : "sm:pr-6"} flex flex-col items-center justify-center space-y-1`}>
+                    <div className="flex items-center justify-center gap-1.5 sm:gap-2 text-[#8066f7] font-mono text-xs sm:text-sm">
+                      <Icon className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span className="text-slate-300 font-medium tracking-wide">{stat.label}</span>
+                    </div>
+                    <div className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+                      {stat.value}
+                    </div>
                   </div>
-                  <div className="text-xs sm:text-sm font-medium text-slate-300 mt-1 sm:mt-2 tracking-wide">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </motion.div>
 
-          {/* Redesigned High-Tech Imagery Showcase: Dual-Layered Interactive Architecture */}
+          {/* High-Tech Showcase Image with Gradient Overlay and Cyber HUD Badges */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 rounded-3xl overflow-hidden border border-white/10 bg-[#080814] shadow-2xl"
+            className="relative z-10 rounded-3xl sm:rounded-[36px] overflow-hidden border border-white/15 bg-[#09071c] shadow-[0_30px_90px_rgba(0,0,0,0.9)]"
           >
-            {/* Primary Centerpiece Image */}
-            <div className="relative h-[360px] sm:h-[480px] md:h-[580px] w-full overflow-hidden group">
+            <div className="relative h-[340px] sm:h-[460px] md:h-[540px] w-full overflow-hidden group">
               <Image
-                src="/bglanding02enhanced.png"
-                alt="YaPaze Technologies Engineering Command Operations"
+                src="/about.png"
+                alt="YaPaze Technologies Engineering Operations"
                 fill
                 priority
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-90"
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05050d] via-black/40 to-transparent" />
+              {/* Cinematic Gradient Fade */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070514] via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#070514]/60 via-transparent to-transparent" />
 
-              {/* Floating Cyber HUD Badges on Top of Image */}
-              <div className="absolute top-16 left-6 sm:top-20 sm:left-10 z-20 flex flex-col gap-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-cyan-400/30 text-xs font-mono text-cyan-300 shadow-lg">
+              {/* Floating Cyber Badges */}
+              <div className="absolute top-16 left-6 sm:top-24 sm:left-10 z-20 flex flex-col gap-2.5">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-cyan-400/40 text-xs font-mono text-cyan-300 shadow-xl">
                   <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                  <span>SYSTEM::CLUSTER_ONLINE (99.98%)</span>
+                  <span>CLUSTER STATUS :: OPTIMAL (99.98% UPTIME)</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-purple-400/30 text-xs font-mono text-purple-300 shadow-lg">
-                  <Server className="w-3.5 h-3.5 text-purple-400" />
-                  <span>DISTRIBUTED_CLOUD_ACTIVE</span>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-primary/40 text-xs font-mono text-primary shadow-xl">
+                  <Server className="w-3.5 h-3.5 text-primary" />
+                  <span>GLOBAL REMOTE INFRASTRUCTURE ACTIVE</span>
                 </div>
               </div>
 
-              {/* Secondary Floating Overlapping Card */}
-              <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-20 max-w-xs sm:max-w-sm rounded-2xl bg-black/70 backdrop-blur-xl border border-white/15 p-4 sm:p-5 shadow-2xl hidden min-[480px]:block">
+              {/* Bottom Right Floating Badge Card */}
+              <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 z-20 max-w-xs sm:max-w-sm rounded-2xl bg-black/80 backdrop-blur-xl border border-white/20 p-4 sm:p-5 shadow-2xl hidden min-[480px]:block">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 rounded-lg bg-primary/20 border border-primary/30">
+                  <div className="p-2 rounded-xl bg-primary/25 border border-primary/40">
                     <Cpu className="w-5 h-5 text-cyan-400" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-white">Full-Stack Lab</h4>
+                    <h4 className="text-sm font-bold text-white">Full-Stack Engineering Lab</h4>
                     <p className="text-[11px] font-mono text-slate-400">Enterprise AI & Cloud Scale</p>
                   </div>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed font-light">
-                  Continuous integration pipelines engineered for rapid global deployment and zero-downtime execution.
+                  Continuous delivery pipelines engineered for rapid global deployment and zero-downtime execution.
                 </p>
               </div>
             </div>
           </motion.div>
-
         </div>
       </section>
 
       {/* 
         ============================================================
-        SECTION 4: CORE VALUES (Added to About Us page as requested)
-        8 Core Values of YaPaze Technologies in High-Tech Glassmorphism
+        SECTION 4: CORE VALUES (8 Values in Standard & Neat 4x2 Grid)
+        Rich gradient backgrounds, distinct accent highlights, and clean typography
         ============================================================
       */}
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#070712] border-y border-white/5 overflow-hidden">
-        {/* Ambient Lights */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-y border-white/10 bg-gradient-to-b from-[#09071c] via-[#0d0928] to-[#08061a]">
+        {/* Subtle Ambient Glows */}
+        <div className="absolute top-1/4 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/15 rounded-full blur-3xl pointer-events-none -z-10" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glassmorphism border border-primary/30 text-xs font-mono font-bold text-primary tracking-widest uppercase">
+          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-18 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-xs font-mono font-bold text-primary tracking-widest uppercase">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-              <span>OUR FOUNDATION</span>
+              <span>CULTURE & PRINCIPLES</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
               Core Values of <span className="gradient-text">YaPaze Technologies</span>
             </h2>
             <p className="text-sm sm:text-base text-slate-400 font-light leading-relaxed">
@@ -445,7 +496,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* 8 Core Values Grid with Unique Futuristic Hover Animation */}
+          {/* 8 Core Values Grid with Clean Standard Proportions */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {coreValues.map((val, idx) => {
               const Icon = val.icon
@@ -455,29 +506,26 @@ export default function AboutPage() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.06 }}
-                  whileHover={{ y: -6, scale: 1.01 }}
-                  className="group relative rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] p-6 backdrop-blur-xl transition-all duration-300 overflow-hidden flex flex-col justify-between"
-                  style={{
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                  }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative rounded-2xl sm:rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.04] via-white/[0.015] to-transparent hover:border-primary/50 p-6 backdrop-blur-xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
                 >
-                  {/* Subtle Top-Right Ambient Glow matching accent */}
+                  {/* Subtle Top Accent Glow matching accent */}
                   <div
                     aria-hidden="true"
-                    className="absolute -top-12 -right-12 w-24 h-24 rounded-full opacity-0 group-hover:opacity-40 blur-xl transition-opacity duration-500"
+                    className="absolute -top-10 -right-10 w-24 h-24 rounded-full opacity-0 group-hover:opacity-40 blur-xl transition-opacity duration-500"
                     style={{ background: val.accent }}
                   />
 
                   {/* Corner Number Badge */}
-                  <span className="absolute top-4 right-4 font-mono text-xs font-bold text-slate-600 group-hover:text-slate-400 transition-colors">
+                  <span className="absolute top-5 right-5 font-mono text-xs font-bold text-slate-500 group-hover:text-slate-300 transition-colors">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
 
                   <div>
-                    {/* Icon */}
-                    <div className="mb-4 inline-flex p-3.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-primary/40 group-hover:scale-110 transition-all duration-300">
-                      <Icon className="w-6 h-6" style={{ color: val.accent }} />
+                    {/* Icon Container */}
+                    <div className="mb-4 inline-flex p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:border-primary/40 group-hover:scale-105 transition-all duration-300 shadow-lg">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: val.accent }} />
                     </div>
 
                     {/* Title */}
@@ -491,8 +539,9 @@ export default function AboutPage() {
                     </p>
                   </div>
 
-                  <div className="mt-5 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500 group-hover:text-slate-400">
-                    <span>STANDARD #{idx + 1}</span>
+                  {/* Bottom Tag */}
+                  <div className="mt-5 pt-3.5 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-slate-500 group-hover:text-slate-300">
+                    <span>{val.tag}</span>
                     <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: val.accent }} />
                   </div>
                 </motion.div>
@@ -505,102 +554,132 @@ export default function AboutPage() {
       {/* 
         ============================================================
         SECTION 5: MISSION & VISION INTERACTIVE STORYTELLING
+        Clean, standard dual-tab switcher with rich gradient presentation
         ============================================================
       */}
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
-            {/* Left Interactive Sphere Toggle */}
-            <div
-              className="relative cursor-pointer group shrink-0"
-              onClick={() => setActiveTab(activeTab === "mission" ? "vision" : "mission")}
-            >
-              <div className="absolute inset-0 bg-primary/25 rounded-full blur-[80px] group-hover:bg-cyan-500/30 transition-all duration-500" />
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full bg-gradient-to-br from-black via-[#0a0a28] to-[#12123e] flex flex-col items-center justify-center p-8 border border-white/15 shadow-[0_0_60px_rgba(128,102,247,0.3)]"
-              >
-                <div className="text-center space-y-2 pointer-events-none">
-                  <span className="text-xs font-mono tracking-widest text-primary uppercase">CLICK TO TOGGLE</span>
-                  <div className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
-                    {activeTab === "mission" ? "Mission" : "Vision"}
-                  </div>
-                  <p className="text-[11px] text-slate-400 max-w-[180px] mx-auto">
-                    {activeTab === "mission" ? "Switch to our future Vision →" : "Switch to our core Mission →"}
-                  </p>
-                </div>
-              </motion.div>
+      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-semibold text-primary tracking-widest uppercase">
+              <span>STRATEGIC MANDATE</span>
             </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Our Mission & <span className="gradient-text">Vision</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 font-light">
+              Clear goals that direct our technical roadmap and partner relationships.
+            </p>
+          </div>
 
-            {/* Right Narrative Content */}
-            <div className="flex-1 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glassmorphism border border-primary/30 text-xs font-mono font-bold text-primary tracking-widest uppercase">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                <span>STRATEGIC MANDATE</span>
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="space-y-5"
-                >
-                  <h3 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-                    {activeTab === "mission" ? (
-                      <>
-                        Empowering global enterprises through{" "}
-                        <span className="gradient-text">accessible & advanced intelligence.</span>
-                      </>
-                    ) : (
-                      <>
-                        Becoming the world&apos;s most trusted{" "}
-                        <span className="gradient-text">partner for next-gen IT solutions.</span>
-                      </>
-                    )}
-                  </h3>
-
-                  <p className="text-slate-300 text-base sm:text-lg font-light leading-relaxed">
-                    {activeTab === "mission"
-                      ? "We work relentlessly to ensure cutting-edge software engineering, autonomous systems, and scalable cloud networks are seamlessly accessible to solve real business challenges, dismantle technical barriers, and unlock exponential growth."
-                      : "To lead the frontier of digital transformation by setting the benchmark for security, speed, and continuous technological innovation—empowering clients worldwide to stay perpetually ahead of change."}
-                  </p>
-
-                  <div className="pt-3 flex flex-wrap gap-3">
-                    {(activeTab === "mission"
-                      ? ["Ethical AI", "Decentralized Systems", "Enterprise Agility"]
-                      : ["Global Reach", "Zero-Downtime Architecture", "Client Excellence"]
-                    ).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 font-mono text-xs text-slate-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+          {/* Clean Standard Pill Tab Switcher */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex p-1.5 rounded-full bg-white/[0.04] border border-white/15 backdrop-blur-xl">
+              <button
+                type="button"
+                onClick={() => setActiveTab("mission")}
+                className={`px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === "mission"
+                  ? "bg-primary text-white shadow-[0_0_20px_rgba(128,102,247,0.5)]"
+                  : "text-slate-400 hover:text-white"
+                  }`}
+              >
+                Our Mission
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("vision")}
+                className={`px-6 sm:px-8 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === "vision"
+                  ? "bg-primary text-white shadow-[0_0_20px_rgba(128,102,247,0.5)]"
+                  : "text-slate-400 hover:text-white"
+                  }`}
+              >
+                Our Vision
+              </button>
             </div>
           </div>
+
+          {/* Interactive Card Presentation */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-3xl bg-gradient-to-br from-[#0e0a29]/90 via-[#0a071f]/85 to-[#060414]/90 border border-primary/30 p-8 sm:p-12 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(128,102,247,0.15)] relative overflow-hidden"
+            >
+              {/* Subtle ambient gradient sphere */}
+              <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-6">
+                <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                  {activeTab === "mission" ? "CORE COMMITMENT" : "LONG-TERM HORIZON"}
+                </div>
+
+                <h3 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                  {activeTab === "mission" ? (
+                    <>
+                      Empowering global enterprises through{" "}
+                      <span className="bg-gradient-to-r from-primary via-purple-300 to-cyan-400 bg-clip-text text-transparent">
+                        accessible, high-standard digital engineering.
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Becoming the world&apos;s benchmark{" "}
+                      <span className="bg-gradient-to-r from-cyan-400 via-primary to-fuchsia-400 bg-clip-text text-transparent">
+                        for reliable, next-generation IT solutions.
+                      </span>
+                    </>
+                  )}
+                </h3>
+
+                <p className="text-slate-300 text-sm sm:text-base md:text-lg font-light leading-relaxed">
+                  {activeTab === "mission"
+                    ? "We work relentlessly to ensure cutting-edge software engineering, autonomous systems, and scalable cloud networks are seamlessly accessible to solve real business challenges, dismantle technical barriers, and unlock exponential growth for businesses of all scales."
+                    : "To lead the frontier of digital transformation by setting the gold standard for security, speed, and continuous technological innovation—empowering clients worldwide to stay perpetually ahead of industry disruption."}
+                </p>
+
+                {/* Key Strategic Pillars */}
+                <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {(activeTab === "mission"
+                    ? [
+                      { label: "Accessible Tech", desc: "Enterprise quality without bloated costs" },
+                      { label: "Scalable Clouds", desc: "Reliable architectures designed for rapid growth" },
+                      { label: "Client Agility", desc: "Fast sprint turnarounds and transparent roadmaps" },
+                    ]
+                    : [
+                      { label: "Global Presence", desc: "Serving clients seamlessly worldwide" },
+                      { label: "Zero-Downtime", desc: "Reliable uptime and hardened security" },
+                      { label: "Future AI Readiness", desc: "Next-gen tech infused into every workflow" },
+                    ]
+                  ).map((item) => (
+                    <div key={item.label} className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+                      <div className="text-xs sm:text-sm font-bold text-white">{item.label}</div>
+                      <div className="text-[11px] text-slate-400 font-light mt-1">{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
       {/* 
         ============================================================
         SECTION 6: PARTNERS ROW
+        Clean, standard enterprise client strip
         ============================================================
       */}
-      <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-y border-white/5">
+      <section className="relative py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-y border-white/10 bg-gradient-to-r from-transparent via-[#0c0824]/60 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap items-center justify-around gap-8 sm:gap-12 opacity-65 hover:opacity-100 transition-opacity duration-300">
+          <div className="flex flex-wrap items-center justify-around gap-8 sm:gap-12 opacity-70 hover:opacity-100 transition-opacity duration-300">
             {partnerLogos.map((brand) => (
               <span
                 key={brand.name}
-                className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-widest text-slate-300 hover:text-white transition-colors cursor-default select-none uppercase"
+                className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-widest text-slate-300 hover:text-white transition-colors cursor-default select-none uppercase font-mono"
               >
                 {brand.name}
               </span>
@@ -612,53 +691,23 @@ export default function AboutPage() {
       {/* 
         ============================================================
         SECTION 7: BOTTOM CTA
+        High-impact standard banner with rich radiant gradient & 2 actions
         ============================================================
       */}
-      <section className="relative py-24 sm:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
+      <section className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
+        {/* Ambient Glows */}
         <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[350px] bg-primary/15 rounded-full blur-[140px]" />
-
-          <svg
-            className="absolute bottom-0 left-0 w-full h-[320px] opacity-20"
-            viewBox="0 0 1440 320"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 160C240 280 480 80 720 200C960 320 1200 120 1440 240V320H0V160Z"
-              stroke="#8066f7"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M0 200C240 320 480 120 720 240C960 360 1200 160 1440 280"
-              stroke="#22d3ee"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
-          </svg>
-
-          <motion.div
-            animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-24 left-[15%] w-8 h-8 sm:w-11 sm:h-11 rounded-full shadow-2xl"
-            style={{
-              background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #cbd5e1 30%, #475569 70%, #0f172a 100%)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.8)",
-            }}
-          />
-
-          <motion.div
-            animate={{ y: [0, 15, 0], x: [0, -8, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute bottom-16 right-[12%] w-5 h-5 sm:w-6 sm:h-6 rounded-full shadow-2xl"
-            style={{
-              background: "radial-gradient(circle at 35% 30%, #ffffff 0%, #cbd5e1 30%, #475569 70%, #0f172a 100%)",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.8)",
-            }}
-          />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] sm:w-[1000px] h-[450px] bg-gradient-to-t from-primary/30 via-indigo-600/15 to-transparent rounded-full blur-[140px]" />
         </div>
 
         <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-xs font-mono font-semibold text-primary tracking-widest uppercase">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <span>LET&apos;S COLLABORATE</span>
+          </div>
+
+          {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -666,31 +715,58 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="space-y-3"
           >
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight">
               Need IT Solutions?
             </h2>
-            <p className="text-3xl sm:text-5xl md:text-6xl font-normal text-white">
-              Let&apos;s <span className="italic font-serif text-cyan-400 bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">start now.</span>
+            <p className="text-3xl sm:text-5xl lg:text-6xl font-normal text-white">
+              Let&apos;s{" "}
+              <span className="italic font-serif bg-gradient-to-r from-primary via-purple-300 to-cyan-400 bg-clip-text text-transparent">
+                start now.
+              </span>
             </p>
           </motion.div>
 
+          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto font-light leading-relaxed">
+            Message us on WhatsApp for an immediate response, or submit a request and our engineers will get back to you within 30 minutes.
+          </p>
+
+          {/* Dual Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="pt-4"
+            className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-3.5 sm:px-10 sm:py-4 rounded-full border border-white/20 bg-white/5 hover:bg-primary text-white text-xs sm:text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:border-primary hover:shadow-[0_0_35px_rgba(128,102,247,0.6)]"
+            {/* Primary Action: WhatsApp */}
+            <a
+              href="https://wa.me/918714414438?text=Hello%20YaPaze%20Technologies!%20I%20would%20like%20to%20discuss%20an%20IT%20project."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:px-9 sm:py-4 rounded-full bg-gradient-to-r from-[#25D366] to-[#1ebe5d] hover:from-[#2ae870] hover:to-[#22d167] text-black font-bold text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(37,211,102,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
-              <span>Get Free Consultation</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+              <MessageCircle className="w-4 h-4 fill-current" />
+              <span>Chat on WhatsApp</span>
+            </a>
+
+            {/* Secondary Action: Raise a Request Modal */}
+            <button
+              type="button"
+              onClick={() => setIsSupportModalOpen(true)}
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:px-9 sm:py-4 rounded-full border border-white/20 bg-white/5 hover:bg-primary/20 hover:border-primary text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_30px_rgba(128,102,247,0.5)] hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Raise a Request</span>
+            </button>
           </motion.div>
         </div>
       </section>
+
+      {/* Support Request Modal */}
+      <SupportRequestModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+      />
 
       <Footer />
       <ScrollToTop />

@@ -243,6 +243,6 @@ export const services: ServiceItem[] = [
       "A pipeline of fresh ideas and talent",
     ],
     tech: ["Full-Stack", "Cloud", "Cybersecurity", "AI & ML", "DevOps", "Mentorship"],
-    cta: { label: "Explore Edu Lab", href: "/skill-lab" },
+    cta: { label: "Explore Academy", href: "/skill-lab" },
   },
 ]

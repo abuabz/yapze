@@ -30,7 +30,7 @@ export function Navbar() {
     { label: "Services", href: "/services" },
     { label: "Portfolio", href: "/portfolio" },
     // { label: "Blog", href: "/blog" },
-    { label: "Edu Lab", href: "/skill-lab" },
+    { label: "Academy", href: "/skill-lab" },
     { label: "Contact", href: "/contact" },
   ]
 

@@ -10,7 +10,7 @@ export default function SkillLabPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (!contact) return
-        const message = `Hello YaPaze! I'm interested in joining the Skill Lab waitlist. My contact: ${contact}`
+        const message = `Hello YaPaze! I'm interested in joining the YaPaze Academy waitlist. My contact: ${contact}`
         const whatsappUrl = `https://wa.me/918714414438?text=${encodeURIComponent(message)}`
         window.open(whatsappUrl, "_blank")
     }
@@ -47,7 +47,7 @@ export default function SkillLabPage() {
                     className="flex items-center gap-2 px-4 py-1.5 rounded-full glassmorphism border border-white/10 mb-8"
                 >
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    <span className="text-xs font-semibold text-white/70 uppercase tracking-widest">welcome to future</span>
+                    <span className="text-xs font-semibold text-white/70 uppercase tracking-widest">YaPaze Academy · Coming Soon</span>
                 </motion.div>
 
                 {/* Main Heading */}
@@ -57,9 +57,12 @@ export default function SkillLabPage() {
                     transition={{ delay: 0.2 }}
                     className="text-center mb-12"
                 >
-                    <h1 className="text-6xl md:text-8xl font-black text-white tracking-tight mb-4 leading-none">
-                        Coming soon!
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-4 leading-none">
+                        YaPaze <span className="gradient-text">Academy</span>
                     </h1>
+                    <p className="text-base md:text-lg text-white/60 max-w-md mx-auto">
+                        Empowering the next generation with hands-on tech skills and industry mentorship.
+                    </p>
                 </motion.div>
 
                 {/* Waitlist Card */}

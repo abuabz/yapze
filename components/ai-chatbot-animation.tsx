@@ -9,11 +9,13 @@ interface AiChatbotAnimationProps {
 
 export function AiChatbotAnimation({ className = "" }: AiChatbotAnimationProps) {
   return (
-    <Lottie
-      animationData={animationData}
-      loop
-      autoplay
-      className={`w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[580px] mx-auto select-none pointer-events-none ${className}`}
-    />
+    <div className="relative w-full flex items-center justify-center">
+      <Lottie
+        animationData={animationData}
+        loop
+        autoplay
+        className={`w-[88vw] xs:w-[82vw] sm:w-full max-w-[360px] xs:max-w-[420px] sm:max-w-[500px] lg:max-w-[580px] scale-115 xs:scale-120 sm:scale-100 mx-auto select-none pointer-events-none transform-gpu origin-center ${className}`}
+      />
+    </div>
   )
 }

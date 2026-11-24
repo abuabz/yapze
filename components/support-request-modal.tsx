@@ -29,7 +29,8 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
     fullName: "",
     phone: "",
     email: "",
-    emirate: "Dubai",
+    country: "",
+    city: "",
     issueType: "",
     supportType: "Remote Support",
     thisIsFor: "Business / Enterprise",
@@ -93,7 +94,8 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
       `*Full Name:* ${formData.fullName || "Not provided"}\n` +
       `*Mobile / WhatsApp:* ${formData.phone || "Not provided"}\n` +
       `*Email:* ${formData.email || "Not provided"}\n` +
-      `*Emirate / Region:* ${formData.emirate}\n` +
+      `*Country:* ${formData.country || "Not provided"}\n` +
+      `*City:* ${formData.city || "Not provided"}\n` +
       `*Issue Type:* ${formData.issueType || "General Support"}\n` +
       `*Support Type:* ${formData.supportType}\n` +
       `*This is for:* ${formData.thisIsFor}\n` +
@@ -347,32 +349,6 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
                           />
                         </div>
 
-                        {/* Emirate / Region */}
-                        <div>
-                          <label className="block text-xs font-semibold text-slate-300 mb-1">
-                            Emirate / Region
-                          </label>
-                          <div className="relative">
-                            <select
-                              name="emirate"
-                              value={formData.emirate}
-                              onChange={handleChange}
-                              className="w-full appearance-none rounded-xl border border-white/10 bg-[#07070d] px-3.5 py-2.5 pr-8 text-xs sm:text-sm text-white focus:bg-[#0a0a14] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/60 transition-all cursor-pointer"
-                            >
-                              <option value="Dubai" className="bg-[#0e0e1c] text-white">Dubai</option>
-                              <option value="Abu Dhabi" className="bg-[#0e0e1c] text-white">Abu Dhabi</option>
-                              <option value="Sharjah" className="bg-[#0e0e1c] text-white">Sharjah</option>
-                              <option value="Ajman" className="bg-[#0e0e1c] text-white">Ajman</option>
-                              <option value="Ras Al Khaimah" className="bg-[#0e0e1c] text-white">Ras Al Khaimah</option>
-                              <option value="Fujairah" className="bg-[#0e0e1c] text-white">Fujairah</option>
-                              <option value="Umm Al Quwain" className="bg-[#0e0e1c] text-white">Umm Al Quwain</option>
-                              <option value="India" className="bg-[#0e0e1c] text-white">India (Remote/Office)</option>
-                              <option value="Other / International" className="bg-[#0e0e1c] text-white">Other / International</option>
-                            </select>
-                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-                          </div>
-                        </div>
-
                         {/* Issue type * */}
                         <div>
                           <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -402,6 +378,36 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
                           </div>
                         </div>
 
+                        {/* Country - Text Box */}
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1">
+                            Country
+                          </label>
+                          <input
+                            type="text"
+                            name="country"
+                            placeholder="e.g. United Arab Emirates, India, UK..."
+                            value={formData.country}
+                            onChange={handleChange}
+                            className="w-full rounded-xl border border-white/10 bg-[#07070d] px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:bg-[#0a0a14] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/60 transition-all"
+                          />
+                        </div>
+
+                        {/* City - Text Box */}
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1">
+                            City
+                          </label>
+                          <input
+                            type="text"
+                            name="city"
+                            placeholder="e.g. Dubai, Abu Dhabi, Kochi..."
+                            value={formData.city}
+                            onChange={handleChange}
+                            className="w-full rounded-xl border border-white/10 bg-[#07070d] px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:bg-[#0a0a14] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/60 transition-all"
+                          />
+                        </div>
+
                         {/* Support type */}
                         <div>
                           <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -423,27 +429,6 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
                           </div>
                         </div>
 
-                        {/* This is for */}
-                        <div>
-                          <label className="block text-xs font-semibold text-slate-300 mb-1">
-                            This is for
-                          </label>
-                          <div className="relative">
-                            <select
-                              name="thisIsFor"
-                              value={formData.thisIsFor}
-                              onChange={handleChange}
-                              className="w-full appearance-none rounded-xl border border-white/10 bg-[#07070d] px-3.5 py-2.5 pr-8 text-xs sm:text-sm text-white focus:bg-[#0a0a14] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/60 transition-all cursor-pointer"
-                            >
-                              <option value="Home / Personal" className="bg-[#0e0e1c] text-white">Home / Personal</option>
-                              <option value="Startup / SME" className="bg-[#0e0e1c] text-white">Startup / SME</option>
-                              <option value="Business / Enterprise" className="bg-[#0e0e1c] text-white">Business / Enterprise</option>
-                              <option value="Agency / Partner" className="bg-[#0e0e1c] text-white">Agency / Partner</option>
-                            </select>
-                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-                          </div>
-                        </div>
-
                         {/* Urgency */}
                         <div>
                           <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -460,6 +445,27 @@ export function SupportRequestModal({ isOpen, onClose }: SupportRequestModalProp
                               <option value="Normal" className="bg-[#0e0e1c] text-white">Normal</option>
                               <option value="High" className="bg-[#0e0e1c] text-white">High</option>
                               <option value="Critical / Emergency" className="bg-[#0e0e1c] text-white">Critical / Emergency</option>
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                          </div>
+                        </div>
+
+                        {/* This is for */}
+                        <div className="sm:col-span-2">
+                          <label className="block text-xs font-semibold text-slate-300 mb-1">
+                            This is for
+                          </label>
+                          <div className="relative">
+                            <select
+                              name="thisIsFor"
+                              value={formData.thisIsFor}
+                              onChange={handleChange}
+                              className="w-full appearance-none rounded-xl border border-white/10 bg-[#07070d] px-3.5 py-2.5 pr-8 text-xs sm:text-sm text-white focus:bg-[#0a0a14] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/60 transition-all cursor-pointer"
+                            >
+                              <option value="Home / Personal" className="bg-[#0e0e1c] text-white">Home / Personal</option>
+                              <option value="Startup / SME" className="bg-[#0e0e1c] text-white">Startup / SME</option>
+                              <option value="Business / Enterprise" className="bg-[#0e0e1c] text-white">Business / Enterprise</option>
+                              <option value="Agency / Partner" className="bg-[#0e0e1c] text-white">Agency / Partner</option>
                             </select>
                             <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                           </div>
