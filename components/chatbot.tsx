@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageCircle, X, Mail, Sparkles, ChevronRight } from "lucide-react"
+import Lottie from "lottie-react"
+import chatbotIconData from "./lottie/chatbot-icon.json"
 
 interface Message {
   id: string
@@ -121,8 +123,13 @@ export function Chatbot() {
             {/* Header Panel */}
             <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/5 relative z-10">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-[#8066f7]/10 rounded-lg border border-[#8066f7]/30">
-                  <Sparkles className="w-4 h-4 text-[#8066f7] filter drop-shadow-[0_0_6px_rgba(128,102,247,0.5)] animate-pulse" />
+                <div className="w-8 h-8 rounded-lg bg-[#8066f7]/15 border border-[#8066f7]/30 flex items-center justify-center overflow-hidden p-0.5">
+                  <Lottie
+                    animationData={chatbotIconData}
+                    loop
+                    autoplay
+                    className="w-full h-full object-contain pointer-events-none"
+                  />
                 </div>
                 <div>
                   <h3 className="text-sm font-bold tracking-tight text-white">YaPaze Help Desk</h3>
@@ -235,26 +242,35 @@ export function Chatbot() {
         )}
       </AnimatePresence>
 
-      {/* Floating launcher trigger orb */}
+      {/* Floating launcher trigger - ONLY the chatbot character without round outer line */}
       <motion.button
         onClick={() => {
           setIsOpen(!isOpen)
           setHasNewMessage(false)
         }}
-        className="w-14 h-14 bg-gradient-to-tr from-[#8066f7] to-cyan-400 p-[1px] rounded-full shadow-[0_10px_30px_rgba(128,102,247,0.35)] hover:shadow-[0_15px_35px_rgba(128,102,247,0.5)] cursor-pointer flex items-center justify-center relative group"
+        aria-label="Toggle Chatbot"
+        className="relative cursor-pointer flex items-center justify-center focus:outline-none transition-transform"
         whileTap={{ scale: 0.92 }}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#8066f7] to-cyan-400 rounded-full animate-ping opacity-25 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none" />
-        
-        {/* Launcher Core Face */}
-        <div className="w-full h-full bg-[#0a0a0f] rounded-full flex items-center justify-center text-white relative">
-          <MessageCircle className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300 filter drop-shadow-[0_0_8px_rgba(128,102,247,0.6)]" />
-        </div>
+        {isOpen ? (
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#0a0a0f] border border-white/20 flex items-center justify-center text-white shadow-[0_8px_25px_rgba(0,0,0,0.6)] hover:bg-[#12121c] transition-colors">
+            <X className="w-6 h-6 text-white" />
+          </div>
+        ) : (
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center filter drop-shadow-[0_8px_20px_rgba(0,0,0,0.7)] hover:drop-shadow-[0_12px_28px_rgba(128,102,247,0.45)] transition-all">
+            <Lottie
+              animationData={chatbotIconData}
+              loop
+              autoplay
+              className="w-full h-full object-contain pointer-events-none"
+            />
+          </div>
+        )}
 
         {/* Unread Alert Badge */}
-        {hasNewMessage && (
-          <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white shadow-lg border-2 border-[#0a0a0f]">
+        {!isOpen && hasNewMessage && (
+          <span className="absolute -top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white shadow-lg border-2 border-black animate-pulse">
             1
           </span>
         )}
